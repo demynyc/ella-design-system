@@ -2623,3 +2623,107 @@ body{background:var(--ella-oat-100)}
   .ella-rv{opacity:1 !important;transform:none !important;transition:none !important}
   #root .ella-hero-v3-photo{translate:none}
 }
+
+/* ==========================================================================
+   Palette rebalance: warm ivory + sand base, espresso for the dark bands,
+   plum kept as the accent (main buttons, links, icons, small details).
+   ========================================================================== */
+:root{
+  --ella-ink:#3a2f2b;            /* warm espresso: booking band + footer */
+  --ella-ink-fg:#f7f1ec;
+  --ella-ink-muted:rgba(247,241,236,.7);
+  --ella-oat-100:#f8f4f0;        /* page */
+  --ella-mauve-100:#f2ece7;      /* alternate sections */
+  --bg-canvas:var(--ella-oat-100);
+  --border-default:#e6ddd6;
+  --card-bg:#efe8e2;  --card-bg-hover:#e8dfd7;
+  --card-rose:#f3e9e8; --card-rose-hover:#ecdedd;   /* barely-blush */
+  --card-sage:#efe9e1; --card-sage-hover:#e8e0d6;   /* sand */
+  --card-plum:#eee8e5; --card-plum-hover:#e6ddd9;   /* stone */
+  --btn-tint:#eee6df; --btn-tint-hover:#e5dbd2;
+  --accent-soft:#c9a6b6;
+}
+body{background:var(--ella-oat-100)}
+
+/* ---------- Header: light, like the Ella Wellness header ---------- */
+#root .ella-header,#root .ella-header.is-scrolled{background:rgba(251,248,245,.94);-webkit-backdrop-filter:saturate(140%) blur(10px);backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-default);box-shadow:none}
+#root .ella-header.is-scrolled{box-shadow:0 1px 20px -14px rgba(58,47,43,.35)}
+#root .ella-logo-word{color:#2f261d}
+#root .ella-logo-by{color:var(--ella-taupe-500)}
+#root .ella-navlink{color:#5a4d44}
+#root .ella-navlink:hover,#root .ella-navlink.is-active{color:#2f261d}
+#root .ella-navlink::after,#root .ella-navlink.is-active::after{background:var(--ella-rose)}
+#root .ella-header .ella-iconbtn{color:#3f342a}
+#root .ella-header .ella-iconbtn:hover{background:var(--card-bg);color:#2f261d}
+#root .ella-header-book,#root .ella-header-book:hover{background:var(--ella-rose);color:#fdf8f6}
+#root .ella-header-book:hover{background:var(--ella-rose-deep)}
+#root .ella-langtoggle{background:var(--card-bg);border-color:var(--border-default)}
+#root .ella-langtoggle button{color:var(--ella-taupe-500)}
+#root .ella-langtoggle button:hover:not(.is-active){color:#2f261d}
+#root .ella-langtoggle button.is-active{background:#fdfaf8;color:#2f261d;box-shadow:0 1px 3px rgba(58,47,43,.12)}
+#root .ella-search.is-open .ella-search-input{background:var(--card-bg);border-color:var(--border-default);color:#2f261d}
+#root .ella-search-input::placeholder{color:var(--ella-taupe-500)}
+@media (max-width:899px){
+  #root .ella-mobile-menu{background:#fbf8f5;border-bottom-color:var(--border-default)}
+  #root .ella-mm-group{border-bottom-color:var(--border-default)}
+  #root .ella-mobile-menu nav a,#root .ella-mobile-menu nav a.ella-mm-top{color:#2f261d;border-bottom-color:var(--border-default)}
+  #root .ella-mobile-menu nav a.is-active,#root .ella-mobile-menu nav a.ella-mm-top.is-active{color:var(--ella-rose)}
+  #root .ella-mobile-menu nav .ella-mm-subs a{color:#5a4d44}
+  #root .ella-mobile-menu .ella-mobile-menu-book{background:var(--ella-rose);color:#fdf8f6}
+}
+
+/* ---------- Hero: neutral warm shade over the photo ---------- */
+#root .ella-hero-v3{background:#2b2421}
+#root .ella-hero-v3-bg::after{
+  background:linear-gradient(90deg,rgba(34,27,24,.66) 0%,rgba(34,27,24,.38) 50%,rgba(34,27,24,.22) 72%,rgba(34,27,24,.42) 100%),
+             linear-gradient(0deg,rgba(34,27,24,.3) 0%,rgba(34,27,24,0) 40%)}
+#root .ella-hero-v3 h1,#root .ella-hero-v3 p,#root .ella-hero-path-label{text-shadow:0 1px 14px rgba(25,19,17,.4)}
+#root .ella-hero-btn.is-solid{background:#fdfaf8;color:#2f261d;border-color:#fdfaf8}
+#root .ella-hero-btn.is-solid:hover{background:#f3e9e8;border-color:#f3e9e8}
+#root .ella-hero-path-node{background:#2b2421}
+#root .ella-hero-path-node.is-first::after,#root .ella-hero-path button:hover .ella-hero-path-node::after{background:var(--accent-soft)}
+#root .ella-hero-path button:hover .ella-hero-path-label{color:#f3e2e8}
+
+/* ---------- Topic tiles: light cards, plum only on the icon and arrow ---------- */
+#root .ella-topic{background:var(--card-bg);color:#2f261d}
+#root .ella-topic:hover{background:var(--card-bg-hover)}
+#root .ella-topic .ella-topic-label{color:#2f261d}
+#root .ella-topic .ella-topic-count{color:var(--ella-taupe-500)}
+#root .ella-topic .ella-topic-icon,#root .ella-topic[data-tone] .ella-topic-icon{color:var(--ella-rose);background:transparent}
+#root .ella-topic .ella-topic-arrow,#root .ella-topic:hover .ella-topic-arrow{color:var(--ella-rose)}
+
+/* ---------- Chips and secondary buttons: sand, dark text; plum on hover ---------- */
+#root .ella-btn-secondary,
+#root .ella-hero-sym,#root .ella-topics-syms .ella-hero-sym,
+#root .ella-article-filter{background:#fdfaf8;border:1px solid var(--border-default);color:#3f342a}
+#root .ella-btn-secondary:hover,
+#root .ella-hero-sym:hover,#root .ella-topics-syms .ella-hero-sym:hover,
+#root .ella-article-filter:hover{background:var(--ella-rose);border-color:var(--ella-rose);color:#fdf8f6}
+#root .ella-article-filter.is-active{background:#3a2f2b;border-color:#3a2f2b;color:#f7f1ec}
+#root .ella-hero-sym.is-more,#root .ella-topics-syms .ella-hero-sym.is-more{background:none;border-color:transparent;color:var(--ella-rose)}
+#root .ella-topics-syms{background:var(--card-bg)}
+#root .ella-supp-page .ella-supp-principles li{background:var(--card-bg);color:#3f342a}
+#root .ella-article-chips li{background:var(--card-bg);color:#3f342a}
+
+/* ---------- Supplement sections: three quiet neutrals instead of three plums ---------- */
+#root .ella-supp-section-head::after{background:var(--ella-rose)}
+
+/* ---------- Booking band + footer: warm espresso, soft-pink details ---------- */
+#root section#book{background:var(--ella-ink)}
+#root section#book .ella-btn-primary{background:#fdfaf8;color:#2f261d}
+.ella-ft{--ft-bg:var(--ella-ink)}
+.ella-ft-sep::before{background:linear-gradient(90deg,rgba(201,166,182,.15) 0%,#c9a6b6 18%,#e3cdd6 50%,#c9a6b6 82%,rgba(201,166,182,.15) 100%);box-shadow:0 0 12px rgba(201,166,182,.25)}
+.ella-ft-sep-badge,.ella-ft-sep .ella-ft-sep-badge{border-color:#c9a6b6;background:var(--ella-ink);box-shadow:0 0 0 6px var(--ella-ink),0 0 16px rgba(201,166,182,.25)}
+
+/* ---------- Other surfaces that were pink ---------- */
+#root .ella-checkin{background:var(--card-bg)}
+#root .ella-takeaways{background:var(--card-rose)}
+/* Chips and secondary buttons: sand, never white */
+#root .ella-btn-secondary,#root .ella-article-filter{background:var(--card-bg);border-color:transparent;color:#3f342a}
+#root .ella-hero-sym,#root .ella-topics-syms .ella-hero-sym{background:#e5dbd3;border-color:transparent;color:#3f342a}
+#root .ella-hero-sym.is-more,#root .ella-topics-syms .ella-hero-sym.is-more{background:none}
+/* Footer and booking band back to the dusty plum */
+:root{--ella-ink:#6a4f5f;--ella-ink-fg:#f6ece9;--ella-ink-muted:rgba(246,236,233,.72)}
+.ella-ft-sep::before{background:linear-gradient(90deg,rgba(217,179,196,.18) 0%,#d9b3c4 18%,#ecd2dd 50%,#d9b3c4 82%,rgba(217,179,196,.18) 100%);box-shadow:0 0 14px rgba(217,179,196,.35)}
+.ella-ft-sep-badge,.ella-ft-sep .ella-ft-sep-badge{border-color:#d9b3c4;box-shadow:0 0 0 6px var(--ella-ink),0 0 18px rgba(217,179,196,.35)}

@@ -272,7 +272,7 @@ export function Header({ lang, setLang, route, setRoute, goToCategory, openArtic
           onClick={(e) => { e.preventDefault(); setRoute('home'); }}
           aria-label="Ella home"
         >
-          <LogoMarkSvg size={34} color="#d9b3c4" center="#f6ece9" />
+          <LogoMarkSvg size={34} color="#b48399" center="#5a3d4c" />
           <span className="ella-logo-text">
             <span className="ella-logo-word">Ella</span>
             <span className="ella-logo-by">Jessica Zavala</span>

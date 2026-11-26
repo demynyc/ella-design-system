@@ -165,7 +165,7 @@ function pageHtml({ lang, relBase, title, desc, canonicalPath, alternates, type 
   <meta property="og:image" content="${image}">
   <meta property="og:locale" content="${lang === 'es' ? 'es_US' : 'en_US'}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#6a4f5f">
+  <meta name="theme-color" content="#fbf8f5">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -211,7 +211,7 @@ function rootHtml() {
   <link rel="alternate" hreflang="es" href="${SITE_ORIGIN}/es/">
   <link rel="alternate" hreflang="x-default" href="${SITE_ORIGIN}/en/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <meta name="theme-color" content="#6a4f5f">
+  <meta name="theme-color" content="#fbf8f5">
   <script>
     (function () {
       var lang = 'en';
