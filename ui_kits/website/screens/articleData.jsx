@@ -26,12 +26,6 @@ const ELLA_ARTICLES = {
         "Symptoms live in perimenopause, because that is where hormones fluctuate.",
         "Perimenopause is also the window where hormone therapy is safest and most effective to start.",
       ],
-      doctorQuestions: [
-        "Based on my symptoms, do you think I’m in perimenopause?",
-        "Do I need any tests, or can you tell from my symptoms?",
-        "Is now a good time for me to consider hormone therapy?",
-        "Which symptoms should make me come back sooner?",
-      ],
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
         { source: "U.S. Office on Women’s Health", title: "Menopause", href: "https://www.womenshealth.gov/menopause" },
@@ -63,12 +57,6 @@ const ELLA_ARTICLES = {
         "One of estrogen’s jobs is reducing inflammation, so when estrogen drops, that brake comes off.",
         "Unchecked inflammation connects heart disease, brain fog, joint pain, GI issues, mood changes, and weight changes.",
         "Reducing inflammation is the single lens worth organizing your decisions around.",
-      ],
-      doctorQuestions: [
-        "Could inflammation be connected to the symptoms I’m having?",
-        "Is there a blood test that shows inflammation, like CRP?",
-        "Which changes in food, exercise, or sleep would help me most?",
-        "Do any of my medications affect inflammation?",
       ],
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
@@ -110,12 +98,6 @@ const ELLA_ARTICLES = {
         "In perimenopause levels fluctuate; in menopause the ovaries stop producing it.",
         "This is why symptoms feel scattered and unrelated. They are related.",
       ],
-      doctorQuestions: [
-        "Could my symptoms, like joint pain, brain fog, or mood changes, be from lower estrogen?",
-        "Should we check other things that can look like menopause, like my thyroid?",
-        "What are my options for replacing estrogen, and are they safe for me?",
-        "How will we know if a treatment is working?",
-      ],
       references: [
         { source: "National Institute on Aging (NIH)", title: "What Is Menopause?", href: "https://www.nia.nih.gov/health/menopause" },
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
@@ -146,12 +128,6 @@ const ELLA_ARTICLES = {
         "Accelerated bone loss is osteoporosis, and it means higher fracture risk.",
         "Calcium, vitamin D, and vitamin K2 all play distinct roles in bone health.",
         "Combine weight-bearing, resistance, balance, and impact work. Consistency beats intensity.",
-      ],
-      doctorQuestions: [
-        "Should I get a bone density scan (DEXA), and when?",
-        "Do I need calcium, vitamin D, or K2, and how much?",
-        "What kind of exercise is safe for me to start with?",
-        "With my family history, what is my fracture risk?",
       ],
       references: [
         { source: "Bone Health & Osteoporosis Foundation", title: "Osteoporosis and bone health", href: "https://www.bonehealthandosteoporosis.org/" },
@@ -193,12 +169,6 @@ const ELLA_ARTICLES = {
         "Strength training is about combating muscle loss, not bodybuilding. It also protects bone.",
         "10,000 steps daily has been shown to reduce belly fat.",
       ],
-      doctorQuestions: [
-        "What are my blood pressure and cholesterol numbers, and are they healthy?",
-        "How does menopause change my risk for heart disease?",
-        "How much exercise should I aim for, with my health?",
-        "Do omega-3 or vitamin D make sense for me?",
-      ],
       references: [
         { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease" },
         { source: "National Heart, Lung, and Blood Institute (NIH)", title: "Heart-healthy eating patterns", href: "https://www.nhlbi.nih.gov/education/dash-eating-plan" },
@@ -233,13 +203,6 @@ const ELLA_ARTICLES = {
         "It is safest and most effective started during perimenopause or within 10 years of menopause onset.",
         "Critical: if you still have a uterus and take estrogen, you must also take progesterone to protect against uterine cancer.",
         "Phytoestrogens (soy, flax, legumes) and adaptogens (Rhodiola, Ashwagandha) are alternatives worth discussing with your doctor.",
-      ],
-      doctorQuestions: [
-        "Am I a good candidate for hormone therapy?",
-        "Which form would you suggest for me: pill, patch, gel, or vaginal?",
-        "I still have my uterus. Will I take progesterone too?",
-        "What are the risks for me, and how often will we review it?",
-        "Are phytoestrogens or adaptogens safe with my medications?",
       ],
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
@@ -281,12 +244,6 @@ const ELLA_ARTICLES = {
         "Los síntomas aparecen en la perimenopausia, porque es cuando las hormonas suben y bajan.",
         "La perimenopausia también es el mejor momento para empezar la terapia hormonal, porque es cuando es más segura y funciona mejor.",
       ],
-      doctorQuestions: [
-        "Por mis síntomas, ¿cree que estoy en la perimenopausia?",
-        "¿Necesito algún análisis, o se puede saber por mis síntomas?",
-        "¿Es buen momento para pensar en la terapia hormonal?",
-        "¿Con qué síntomas debo regresar antes?",
-      ],
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
         { source: "U.S. Office on Women’s Health", title: "Menopause", href: "https://www.womenshealth.gov/menopause" },
@@ -318,12 +275,6 @@ const ELLA_ARTICLES = {
         "Una de las funciones del estrógeno es bajar la inflamación. Por eso, cuando el estrógeno baja, la inflamación se queda sin freno.",
         "La inflamación sin control está detrás de las enfermedades del corazón, la mente nublada, el dolor de articulaciones, los problemas digestivos, el estado de ánimo y el peso.",
         "Bajar la inflamación es la mejor guía para tomar tus decisiones.",
-      ],
-      doctorQuestions: [
-        "¿La inflamación puede tener que ver con mis síntomas?",
-        "¿Hay algún análisis de sangre que mida la inflamación, como la proteína C reactiva?",
-        "¿Qué cambios en la comida, el ejercicio o el sueño me ayudarían más?",
-        "¿Alguno de mis medicamentos afecta la inflamación?",
       ],
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
@@ -365,12 +316,6 @@ const ELLA_ARTICLES = {
         "En la perimenopausia los niveles suben y bajan; en la menopausia los ovarios dejan de producirlo.",
         "Por eso los síntomas parecen no tener nada que ver entre sí. Pero sí tienen que ver.",
       ],
-      doctorQuestions: [
-        "¿Mis síntomas, como el dolor de articulaciones, la mente nublada o los cambios de humor, pueden ser por el estrógeno bajo?",
-        "¿Debemos revisar otras cosas que se parecen a la menopausia, como la tiroides?",
-        "¿Qué opciones tengo para reponer el estrógeno, y son seguras para mí?",
-        "¿Cómo vamos a saber si un tratamiento está funcionando?",
-      ],
       references: [
         { source: "National Institute on Aging (NIH)", title: "What Is Menopause?", href: "https://www.nia.nih.gov/health/menopause" },
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
@@ -401,12 +346,6 @@ const ELLA_ARTICLES = {
         "Cuando el hueso se pierde así de rápido se llama osteoporosis, y aumenta el riesgo de fracturas.",
         "El calcio, la vitamina D y la vitamina K2 cumplen funciones distintas en la salud de los huesos.",
         "Combina ejercicios con peso, de fuerza, de equilibrio y de impacto. Ser constante importa más que la intensidad.",
-      ],
-      doctorQuestions: [
-        "¿Me debo hacer una densitometría ósea, y cuándo?",
-        "¿Necesito calcio, vitamina D o K2, y cuánto?",
-        "¿Con qué tipo de ejercicio puedo empezar sin riesgo?",
-        "Con mis antecedentes familiares, ¿qué tan alto es mi riesgo de fracturas?",
       ],
       references: [
         { source: "Bone Health & Osteoporosis Foundation", title: "Osteoporosis and bone health", href: "https://www.bonehealthandosteoporosis.org/" },
@@ -448,12 +387,6 @@ const ELLA_ARTICLES = {
         "Las pesas sirven para no perder músculo, no para ser fisicoculturista. También protegen los huesos.",
         "Está comprobado que caminar 10,000 pasos al día ayuda a bajar la grasa del abdomen.",
       ],
-      doctorQuestions: [
-        "¿Cómo están mi presión y mi colesterol? ¿Están en un rango sano?",
-        "¿Cómo cambia la menopausia mi riesgo de enfermedades del corazón?",
-        "Con mi salud, ¿cuánto ejercicio debo hacer?",
-        "¿Me conviene tomar omega-3 o vitamina D?",
-      ],
       references: [
         { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease" },
         { source: "National Heart, Lung, and Blood Institute (NIH)", title: "Heart-healthy eating patterns", href: "https://www.nhlbi.nih.gov/education/dash-eating-plan" },
@@ -488,13 +421,6 @@ const ELLA_ARTICLES = {
         "Es más segura y funciona mejor si la empiezas en la perimenopausia o en los primeros 10 años de la menopausia.",
         "Muy importante: si todavía tienes útero y tomas estrógeno, también tienes que tomar progesterona para protegerte del cáncer de útero.",
         "Los fitoestrógenos (soya, linaza, frijoles y lentejas) y los adaptógenos (rhodiola, ashwagandha) son alternativas que vale la pena platicar con tu médico.",
-      ],
-      doctorQuestions: [
-        "¿Soy buena candidata para la terapia hormonal?",
-        "¿Qué forma me recomienda: pastilla, parche, gel o vaginal?",
-        "Todavía tengo útero. ¿También voy a tomar progesterona?",
-        "¿Qué riesgos tiene para mí, y cada cuánto lo vamos a revisar?",
-        "¿Los fitoestrógenos o los adaptógenos son seguros con mis medicamentos?",
       ],
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },

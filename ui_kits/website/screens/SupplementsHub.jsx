@@ -181,13 +181,13 @@ export function SupplementsHub({ lang, setRoute }) {
   ];
 
   const PRINCIPLES = isEs ? [
-    { t:'Primero la comida',            d:'Los suplementos ayudan con lo que falta, no sustituyen la comida. Cuando un alimento sirve, te lo digo.' },
-    { t:'La forma importa tanto como el nombre', d:'El óxido de magnesio y el glicinato no son lo mismo. Te digo cuál buscar.' },
-    { t:'Si hay poca evidencia, te lo digo', d:'Algunos están bien estudiados. Otros son prometedores, pero todavía falta investigación. Mereces saber cuál es cuál.' },
+    { t:'Primero la comida' },
+    { t:'La forma importa' },
+    { t:'Evidencia honesta' },
   ] : [
-    { t:'Food first, always',           d:'Supplements fill gaps, they don\u2019t replace a plate. Where a food source works, I say so.' },
-    { t:'The form matters as much as the name', d:'Magnesium oxide and magnesium glycinate are not the same purchase. I tell you which form to look for.' },
-    { t:'If the evidence is thin, I say so', d:'Some of these are well established. Others are promising and early. You deserve to know which is which.' },
+    { t:'Food first' },
+    { t:'The form matters' },
+    { t:'Honest about evidence' },
   ];
 
   const FAQS = isEs ? [
@@ -218,25 +218,21 @@ export function SupplementsHub({ lang, setRoute }) {
 
   return (
     <div data-screen-label="06 Supplements">
-      <section className="ella-section-tight">
+      <section className="ella-section-tight ella-supp-page">
         <div className="ella-container">
-          <div className="ella-section-head" style={{ maxWidth: 720 }}>
+          <div className="ella-section-head ella-supp-intro">
             <div className="ella-eyebrow">{t('nav_supplements').toUpperCase()}</div>
             <h2>{isEs ? 'En esta etapa, más importantes que un multivitamínico.' : 'More important than a multivitamin, at this stage.'}</h2>
             <p className="ella-supp-lede">
               {isEs
-                ? 'Estos son los que investigué para mí. No vendo ninguno. De cada uno te digo para qué sirve, de qué alimento sacarlo primero, qué buscar en la etiqueta y cuándo tener cuidado.'
-                : 'These are the ones I researched for myself. I don\u2019t sell any of them. For each one you get what it does, the food to get it from first, the form to look for on the label, and when to be careful.'}
+                ? 'Los que investigué para mí. No vendo ninguno. Toca uno para ver los detalles.'
+                : 'The ones I researched for myself. I don\u2019t sell any of them. Tap one for the details.'}
             </p>
           </div>
 
           <ol className="ella-supp-principles">
             {PRINCIPLES.map((p, i) => (
-              <li key={p.t}>
-                <span className="ella-supp-principle-num">{String(i + 1).padStart(2, '0')}</span>
-                <h3>{p.t}</h3>
-                <p>{p.d}</p>
-              </li>
+              <li key={p.t}>{p.t}</li>
             ))}
           </ol>
 
@@ -245,7 +241,6 @@ export function SupplementsHub({ lang, setRoute }) {
               <div key={g.key} className="ella-supp-section" data-tone={g.tone}>
                 <div className="ella-supp-section-head">
                   <h2>{g.title}</h2>
-                  <p>{g.note}</p>
                 </div>
                 <div className="ella-supp-cards">
                   {items.map((sup, idx) => sup.group === g.key ? (
@@ -281,10 +276,10 @@ export function SupplementsHub({ lang, setRoute }) {
             </div>
           </div>
 
-          <div style={{ marginTop: 40, padding: '20px 24px', background: 'var(--card-bg)', borderRadius: 18, fontSize: 14, color: 'var(--ella-clay-700)', fontStyle: 'italic', lineHeight: 1.5 }}>
+          <div className="ella-supp-disc">
             {isEs
-              ? 'Habla con tu médico antes de empezar cualquier suplemento, sobre todo si tomas medicamentos. Ella comparte información, no consejo médico.'
-              : 'Talk to your doctor before starting any supplement, especially if you take medication. Ella shares information, not personalized medical advice.'}
+              ? 'Habla con tu médico antes de empezar cualquier suplemento.'
+              : 'Talk to your doctor before starting any supplement.'}
           </div>
         </div>
       </section>

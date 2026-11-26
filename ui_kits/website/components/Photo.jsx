@@ -6,7 +6,7 @@ export function Photo({ aspect = '4/3', caption, tint = 'rose', radius = '16px',
   const tints = {
     rose:  { from: '#e9dae1', to: '#efe7da', figure: '#7e5266' },
     cream: { from: '#efe7da', to: '#e4d9c7', figure: '#8b7c64' },
-    sage:  { from: '#e2e6d9', to: '#efe7da', figure: '#6f7e5d' },
+    sage:  { from: '#ead6de', to: '#efe7da', figure: '#7e5266' },
     plum:  { from: '#e8dde2', to: '#efe7da', figure: '#7e5266' },
   };
   const c = tints[tint] || tints.rose;

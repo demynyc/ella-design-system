@@ -3,14 +3,10 @@
 // variant / language.
 
 // ---- Shared external links (replace placeholders with real ones) ----
-// Fill these in and the matching buttons appear automatically.
-// Empty = the button is hidden (or falls back to email for booking).
+// Booking falls back to email if the calendar link is ever removed.
 const ELLA_EMAIL = 'info@ellabienestar.com';
 const ELLA_LINKS = {
-  whatsapp: '',   // e.g. 'https://wa.me/15551234567'
-  whatsappChannel: '', // e.g. 'https://whatsapp.com/channel/XXXX'
   calendar: 'https://calendar.app.google/ocK2oisypCb66A4X9',
-  instagram: '',  // e.g. 'https://instagram.com/handle'
   email: ELLA_EMAIL,
 };
 // Until a booking link exists, "Book" opens an email to Jessica.
@@ -19,7 +15,7 @@ ELLA_LINKS.booking = ELLA_LINKS.calendar ||
 window.ELLA_LINKS = ELLA_LINKS;
 
 const ELLA_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "primary": "#7e5266",
+  "primary": "#8a5d72",
   "displayFont": "DM Serif Display",
   "bodyFont": "Nunito",
   "heroVariant": "default",
@@ -27,10 +23,13 @@ const ELLA_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "lang": "en"
 }/*EDITMODE-END*/;
 
-// ---- URLs: every page gets its own address, e.g. #/es/articles/inflammation ----
+// ---- URLs: every page gets its own address ----
+// The built site (window.ELLA_STATIC) uses real paths, e.g. /es/articles/inflammation/.
+// The editable prototype (this folder served as-is) uses #/es/articles/inflammation.
 const ELLA_ROUTES = ['home', 'articles', 'article', 'nutrition', 'supplements', 'resources', 'quiz', 'privacy', 'glossary', 'symptoms', 'urgent', 'budget'];
-function parseEllaHash() {
-  const parts = (window.location.hash || '').replace(/^#\/?/, '').split('/').filter(Boolean);
+const ELLA_PATH_MODE = !!window.ELLA_STATIC;
+const ELLA_BASE = window.ELLA_BASE || '/';
+function parseEllaParts(parts) {
   let lang = null;
   if (parts[0] === 'es' || parts[0] === 'en') lang = parts.shift();
   let route = parts[0] || 'home', id = null;
@@ -39,11 +38,27 @@ function parseEllaHash() {
   if (!ELLA_ROUTES.includes(route)) route = 'home';
   return { lang, route, id };
 }
-function buildEllaHash(lang, route, id) {
+function ellaHashParts() {
+  return (window.location.hash || '').replace(/^#\/?/, '').split('/').filter(Boolean);
+}
+function parseEllaHash() {
+  if (ELLA_PATH_MODE) {
+    // An old #/en/... link still works: it is read once, then the address is rewritten.
+    if (/^#\//.test(window.location.hash || '')) return parseEllaParts(ellaHashParts());
+    const rel = window.location.pathname.startsWith(ELLA_BASE)
+      ? window.location.pathname.slice(ELLA_BASE.length) : window.location.pathname;
+    return parseEllaParts(rel.split('/').filter((x) => x && x !== 'index.html'));
+  }
+  return parseEllaParts(ellaHashParts());
+}
+function buildEllaPath(lang, route, id) {
   const path = route === 'home' ? '' : route === 'article' ? 'articles/' + encodeURIComponent(id)
     : (route === 'symptoms' && id) ? 'symptoms/' + encodeURIComponent(id) : route;
-  return '#/' + lang + (path ? '/' + path : '');
+  return ELLA_PATH_MODE
+    ? ELLA_BASE + lang + '/' + (path ? path + '/' : '')
+    : '#/' + lang + (path ? '/' + path : '');
 }
+window.ellaPath = (lang, route, id) => buildEllaPath(lang, route, id);
 // First visit: Spanish-speaking browsers open in Spanish.
 function initialEllaLang(fallback) {
   const fromUrl = parseEllaHash().lang;
@@ -64,9 +79,21 @@ function App() {
   const setLang = (l) => { setLangState(l); try { localStorage.setItem('ella-lang', l); } catch (e) {} };
 
   // Keep the address bar in step with the page (adds a history entry, so Back works).
+  const firstSync = React.useRef(true);
   React.useEffect(() => {
-    const want = buildEllaHash(lang, route, route === 'symptoms' ? symptomId : articleId);
-    if (window.location.hash !== want) window.location.hash = want;
+    const want = buildEllaPath(lang, route, route === 'symptoms' ? symptomId : articleId);
+    if (ELLA_PATH_MODE) {
+      const here = window.location.pathname + window.location.hash;
+      if (here !== want) {
+        if (firstSync.current) window.history.replaceState(null, '', want);
+        else window.history.pushState(null, '', want);
+      }
+      const page = window.ELLA_PAGE_META && window.ELLA_PAGE_META[want.slice(ELLA_BASE.length)];
+      if (page) document.title = page;
+    } else if (window.location.hash !== want) {
+      window.location.hash = want;
+    }
+    firstSync.current = false;
   }, [lang, route, articleId, symptomId]);
 
   // Back/forward buttons and pasted links.
@@ -78,8 +105,9 @@ function App() {
       if (p.route === 'article' && p.id) setArticleId(p.id);
       if (p.route === 'symptoms') setSymptomId(p.id || null);
     }
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
+    const evt = ELLA_PATH_MODE ? 'popstate' : 'hashchange';
+    window.addEventListener(evt, onHash);
+    return () => window.removeEventListener(evt, onHash);
   }, [lang]);
   const [articleCategory, setArticleCategory] = React.useState(null);
   const headerRef = React.useRef(null);
@@ -124,7 +152,12 @@ function App() {
 
   // Scroll-reveal: fade/slide sections in as they enter the viewport
   React.useEffect(() => {
-    const targets = document.querySelectorAll('main section, main .ella-about-hero, main .ella-about-grid');
+    // Only sections that start below the fold fade in, and they start just
+    // before they scroll into view, so nothing on screen is ever hidden.
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const fold = window.innerHeight;
+    const targets = [...document.querySelectorAll('main section:not(.ella-hero)')]
+      .filter((el) => el.getBoundingClientRect().top > fold);
     if (!targets.length) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -133,10 +166,9 @@ function App() {
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    targets.forEach((el, i) => {
+    }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+    targets.forEach((el) => {
       el.classList.add('ella-reveal');
-      el.style.transitionDelay = (i === 0 ? 0 : Math.min(i, 3) * 60) + 'ms';
       io.observe(el);
     });
     return () => io.disconnect();
@@ -162,7 +194,7 @@ function App() {
     <div className={t.showOrnaments ? '' : 'ella-no-ornaments'}>
       <Header lang={lang} setLang={setLang} route={route} setRoute={setRoute} goToCategory={goToCategory} openArticle={openArticle} openSymptom={openSymptom} />
       <main key={route} className="ella-main-fade">{screen}</main>
-      <Footer lang={lang} setRoute={setRoute} />
+      <Footer lang={lang} setLang={setLang} route={route} setRoute={setRoute} />
 
       <TweaksPanel title="Tweaks">
         <TweakSection label="Brand">

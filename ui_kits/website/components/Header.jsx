@@ -174,7 +174,7 @@ export function Header({ lang, setLang, route, setRoute, goToCategory, openArtic
     const all = (window.ELLA_ARTICLES && window.ELLA_ARTICLES[lang]) || [];
     const articles = all.map((a) => {
       const inTitle = fold(a.title).includes(term);
-      const pool = [a.lede, ...(a.takeaways || []), ...(a.body || []).map(blockText), ...(a.doctorQuestions || [])];
+      const pool = [a.lede, ...(a.takeaways || []), ...(a.body || []).map(blockText)];
       const hit = firstHit([a.title, ...pool]);
       if (!inTitle && !hit && !fold(a.category).includes(term)) return null;
       const via = !inTitle && hit && hit.via ? hit.via : null;
@@ -272,7 +272,7 @@ export function Header({ lang, setLang, route, setRoute, goToCategory, openArtic
           onClick={(e) => { e.preventDefault(); setRoute('home'); }}
           aria-label="Ella home"
         >
-          <LogoMarkSvg size={32} />
+          <LogoMarkSvg size={34} color="#d9b3c4" center="#f6ece9" />
           <span className="ella-logo-text">
             <span className="ella-logo-word">Ella</span>
             <span className="ella-logo-by">Jessica Zavala</span>

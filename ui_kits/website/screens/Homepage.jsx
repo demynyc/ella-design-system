@@ -35,48 +35,55 @@ export function Homepage({ lang, setRoute, setArticleId, openSymptom, goToCatego
 
   return (
     <div data-screen-label="01 Homepage">
-      {/* ============== HERO ============== */}
-      <section className="ella-hero" data-screen-label="hero">
-        <div className="ella-container">
-          <div className="ella-hero-grid">
-            <div>
-              <h1>
-                {isEs ? <>De mujeres, <em>para mujeres.</em></> : <>By women, <em>for women.</em></>}
-              </h1>
-              <p>
-                {isEs
-                  ? <><b>Todo lo que necesitas saber sobre la menopausia.</b> Nutrición, suplementos, ejercicio, salud mental y las preguntas que debes hacerle a tu médico.</>
-                  : <><b>Everything you need to know about menopause.</b> Nutrition, supplements, exercise, mental health, and the questions to ask your doctor.</>}
-              </p>
-              <div className="ella-hero-why">
-                <div className="ella-eyebrow">{isEs ? 'POR QUÉ IMPORTA' : 'WHY THIS MATTERS'}</div>
-                <p>
-                  {isEs
-                    ? 'Todas las mujeres pasamos por la menopausia, y aun así la mayoría de las carreras de medicina le dedican menos de una hora. Por eso tantas nos sentimos perdidas durante todo el proceso.'
-                    : 'Every woman goes through menopause, yet most medical schools spend less than an hour on it. That’s why so many of us feel lost the whole way through.'}
-                </p>
-              </div>
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 6 }}>
-                <button type="button" className="ella-btn ella-btn-primary ella-btn-lg" onClick={() => setRoute('articles')}>
-                  {isEs ? 'Empieza a leer' : 'Start reading'}
-                  <IconArrow width="20" height="20" />
-                </button>
-              </div>
-              <div className="ella-hero-cred" aria-label="About the author">
-                <div className="ella-hero-cred-avatar" />
-                <div>
-                  <strong>Jessica Zavala</strong> · {isEs ? 'Certificado en bienestar femenino' : "Women's wellness certificate"}
-                </div>
-              </div>
-            </div>
-            <div style={{ position: 'relative' }}>
-              <IllustrationSprig width={120} className="ella-hero-ornament tl" />
-              <Photo aspect="4/5" tint="rose" src="assets/photos/portrait-terrace.jpg" objectPosition="68% center" alt={isEs ? 'Mujer sonriendo en una terraza' : 'Woman smiling on a terrace in natural light'} radius="24px">
-                <IllustrationBranch width={160} className="ella-hero-ornament br" />
-              </Photo>
+      {/* ============== HERO ==============
+          Modeled on the Ella Wellness hero: full-bleed photo, large serif
+          headline, one line of copy, two pill buttons, and a five-step path
+          on the right. Everything rises in on load, staggered. */}
+      <section className="ella-hero ella-hero-v3" data-screen-label="hero">
+        <div className="ella-hero-v3-bg" aria-hidden="true"><div className="ella-hero-v3-photo" /></div>
+        <div className="ella-container ella-hero-v3-inner">
+          <div className="ella-hero-v3-copy">
+            <h1>
+              <span className="ella-rise ella-rise-1">{isEs ? 'De mujeres,' : 'By women,'}</span>
+              <span className="ella-rise ella-rise-2">{isEs ? 'para mujeres.' : 'for women.'}</span>
+            </h1>
+            <p className="ella-rise ella-rise-4">
+              {isEs
+                ? 'Información y recursos confiables sobre la menopausia, en español y en inglés. Si quieres hablar con alguien, ofrecemos consultas personales.'
+                : 'Trusted information and resources on menopause, in English and Spanish. When you’d like to talk with someone, one-on-one consultations are available.'}
+            </p>
+            <div className="ella-hero-v3-ctas ella-rise ella-rise-5">
+              <button type="button" className="ella-hero-btn is-solid" onClick={() => setRoute('articles')}>
+                {isEs ? 'Empieza a leer' : 'Start reading'}
+              </button>
+              <button type="button" className="ella-hero-btn is-ghost" onClick={() => setRoute('quiz')}>
+                {isEs ? 'Haz el cuestionario' : 'Take the check-in'}
+              </button>
             </div>
           </div>
-          <div style={{ height: 24 }} />
+
+          <ol className="ella-hero-path" aria-label={isEs ? 'Cómo usar Ella' : 'How to use Ella'}>
+            {(isEs ? [
+              ['Conoce tu etapa', () => goCat('Perimenopausia')()],
+              ['Encuentra tus síntomas', () => openSymptom && openSymptom(null)],
+              ['Haz el cuestionario', () => setRoute('quiz')],
+              ['Lee lo que ayuda', () => setRoute('articles')],
+              ['Haz una cita', () => { const el = document.getElementById('book'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }],
+            ] : [
+              ['Know your stage', () => goCat('Perimenopause')()],
+              ['Find your symptoms', () => openSymptom && openSymptom(null)],
+              ['Take the check-in', () => setRoute('quiz')],
+              ['Read what helps', () => setRoute('articles')],
+              ['Book a consultation', () => { const el = document.getElementById('book'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }],
+            ]).map(([label, go], i) => (
+              <li key={label} style={{ '--i': i }}>
+                <button type="button" onClick={go}>
+                  <span className="ella-hero-path-label">{label}</span>
+                  <span className={'ella-hero-path-node' + (i === 0 ? ' is-first' : '')} aria-hidden="true" />
+                </button>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -173,57 +180,21 @@ export function Homepage({ lang, setRoute, setArticleId, openSymptom, goToCatego
         </div>
       </section>
 
-      {/* ============== CONSULTATION / WORK WITH JESSICA ============== */}
+      {/* ============== CONSULTATION ============== */}
       <section className="ella-section" data-screen-label="consultation" id="book">
         <div className="ella-container">
-          <div className="ella-consult">
-            <div className="ella-consult-art">
-              <Photo aspect="4/5" tint="sage" alt={isEs ? 'Retrato de Jessica' : 'Warm portrait of Jessica'} radius="22px" />
-              <div className="ella-consult-badge">
-                <span className="ella-consult-badge-min">30</span>
-                <span className="ella-consult-badge-lbl">{isEs ? 'min' : 'min'}</span>
-              </div>
-            </div>
+          <div className="ella-consult ella-consult-solo">
             <div className="ella-consult-body">
-              <div className="ella-eyebrow">{isEs ? 'TRABAJA CONMIGO' : 'WORK WITH ME'}</div>
               <h2 className="ella-h2-italic">
-                {isEs ? <>Haz una <em>cita</em> de 30 minutos.</> : <>Book a 30-minute <em>consultation.</em></>}
+                {isEs ? 'Haz una cita' : 'Book a consultation'}
               </h2>
               <p>
-                {isEs
-                  ? 'Una llamada contigo y Jessica, en español o en inglés, para hablar de tus síntomas y de cuál es el siguiente paso.'
-                  : 'A one-on-one call with Jessica, in English or Spanish, to talk through your symptoms and where to go next.'}
-              </p>
-              <ul className="ella-consult-list">
-                <li>
-                  <strong>{isEs ? 'Por dónde empezar' : 'Where to start'}</strong>
-                  {isEs ? 'Qué atender primero, según tu etapa' : 'What to prioritize first, based on your stage'}
-                </li>
-                <li>
-                  <strong>{isEs ? 'Qué preguntarle a tu médico' : 'What to ask your doctor'}</strong>
-                  {isEs ? 'Que salgas de la cita con respuestas' : 'Leave your appointment with real answers'}
-                </li>
-                <li>
-                  <strong>{isEs ? 'Cómo entender los estudios' : 'How to read the research'}</strong>
-                  {isEs ? 'Distinguir la evidencia de la publicidad' : 'Telling evidence apart from marketing'}
-                </li>
-              </ul>
-              <p className="ella-consult-note">
-                {isEs
-                  ? 'Ella comparte información, no consejo médico. Esta llamada no sustituye a tu médico y no incluye diagnósticos ni recetas.'
-                  : 'Ella shares information, not medical advice. This call doesn’t replace your doctor and doesn’t include a diagnosis or prescriptions.'}
+                {isEs ? '30 minutos, en español o en inglés.' : '30 minutes, in English or Spanish.'}
               </p>
               <div className="ella-consult-actions">
                 <a className="ella-btn ella-btn-primary" href={ELLA_LINKS.booking} target="_blank" rel="noopener noreferrer">
-                  <IconCalendar width="18" height="18" />
-                  {isEs ? 'Hacer una cita' : 'Book 30 minutes'}
+                  {isEs ? 'Hacer una cita' : 'Book a consultation'}
                 </a>
-                {ELLA_LINKS.whatsapp ? (
-                  <a className="ella-btn ella-btn-whatsapp" href={ELLA_LINKS.whatsapp} target="_blank" rel="noopener noreferrer">
-                    <IconWhatsApp width="18" height="18" />
-                    {isEs ? 'Escríbeme por WhatsApp' : 'Message me on WhatsApp'}
-                  </a>
-                ) : null}
               </div>
             </div>
           </div>

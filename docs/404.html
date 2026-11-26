@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/ella-design-system/">
+  <title>Page not found · Ella Bienestar</title>
+  
+  <meta name="robots" content="noindex">
+  
+  
+  <meta property="og:site_name" content="Ella Bienestar">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Page not found · Ella Bienestar">
+  
+  
+  <meta property="og:image" content="https://ethanluvr2.github.io/ella-design-system/assets/photos/hands-flower.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#6a4f5f">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito:ital,wght@0,300..900;1,300..900&display=swap">
+  <link rel="stylesheet" href="site.css">
+  <link rel="preload" as="image" href="assets/photos/hands-flower.jpg">
+  <script>
+    window.ELLA_STATIC = true;
+    window.ELLA_BASE = new URL(document.baseURI).pathname;
+    window.ELLA_PAGE_META = {"en/":"Ella Bienestar · Menopause information in English and Spanish","en/articles/":"Articles · Ella Bienestar","en/nutrition/":"Nutrition · Ella Bienestar","en/supplements/":"Supplements · Ella Bienestar","en/resources/":"Resources · Ella Bienestar","en/quiz/":"Personal check-in · Ella Bienestar","en/privacy/":"Privacy · Ella Bienestar","en/glossary/":"Spanish–English glossary · Ella Bienestar","en/symptoms/":"Symptoms · Ella Bienestar","en/urgent/":"When to see a doctor · Ella Bienestar","en/budget/":"Care on a budget · Ella Bienestar","en/articles/menopause-vs-perimenopause/":"Menopause and perimenopause: what’s the difference? · Ella Bienestar","en/articles/inflammation/":"Inflammation: the thing I wish someone had explained first · Ella Bienestar","en/articles/estrogen-explained/":"Estrogen: what it actually does · Ella Bienestar","en/articles/bones-and-estrogen/":"Your bones after estrogen · Ella Bienestar","en/articles/heart-health-menopause/":"Heart health after menopause · Ella Bienestar","en/articles/hrt-and-alternatives/":"HRT and natural alternatives · Ella Bienestar","en/symptoms/hot-flashes/":"Hot flashes & night sweats · Ella Bienestar","en/symptoms/sleep/":"Trouble sleeping · Ella Bienestar","en/symptoms/mood/":"Mood changes & anxiety · Ella Bienestar","en/symptoms/brain-fog/":"Brain fog & forgetfulness · Ella Bienestar","en/symptoms/vaginal-dryness/":"Vaginal dryness & painful sex · Ella Bienestar","en/symptoms/joint-pain/":"Joint pain & stiffness · Ella Bienestar","en/symptoms/weight/":"Weight changes · Ella Bienestar","es/":"Ella Bienestar · Información sobre la menopausia en español e inglés","es/articles/":"Artículos · Ella Bienestar","es/nutrition/":"Nutrición · Ella Bienestar","es/supplements/":"Suplementos · Ella Bienestar","es/resources/":"Recursos · Ella Bienestar","es/quiz/":"Cuestionario personal · Ella Bienestar","es/privacy/":"Privacidad · Ella Bienestar","es/glossary/":"Glosario español–inglés · Ella Bienestar","es/symptoms/":"Síntomas · Ella Bienestar","es/urgent/":"Cuándo ir al médico · Ella Bienestar","es/budget/":"Atención de bajo costo · Ella Bienestar","es/articles/menopause-vs-perimenopause/":"Menopausia y perimenopausia: ¿cuál es la diferencia? · Ella Bienestar","es/articles/inflammation/":"Inflamación: lo que me hubiera gustado que alguien me explicara primero · Ella Bienestar","es/articles/estrogen-explained/":"Estrógeno: lo que de verdad hace · Ella Bienestar","es/articles/bones-and-estrogen/":"Tus huesos cuando baja el estrógeno · Ella Bienestar","es/articles/heart-health-menopause/":"Salud del corazón después de la menopausia · Ella Bienestar","es/articles/hrt-and-alternatives/":"TRH y alternativas naturales · Ella Bienestar","es/symptoms/hot-flashes/":"Bochornos y sudores nocturnos · Ella Bienestar","es/symptoms/sleep/":"Problemas para dormir · Ella Bienestar","es/symptoms/mood/":"Cambios de ánimo y ansiedad · Ella Bienestar","es/symptoms/brain-fog/":"Mente nublada y olvidos · Ella Bienestar","es/symptoms/vaginal-dryness/":"Resequedad vaginal y dolor en las relaciones · Ella Bienestar","es/symptoms/joint-pain/":"Dolor y rigidez en las articulaciones · Ella Bienestar","es/symptoms/weight/":"Cambios de peso · Ella Bienestar"};
+    // Links that only point at a spot on the page (#section) scroll there
+    // instead of following the <base> to the home page.
+    window.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || e.defaultPrevented) return;
+      e.preventDefault();
+      var id = a.getAttribute('href').slice(1);
+      var el = id && document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+  <script defer src="vendor/react.production.min.js"></script>
+  <script defer src="vendor/react-dom.production.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>

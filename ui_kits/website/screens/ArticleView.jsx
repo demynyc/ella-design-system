@@ -73,14 +73,8 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
             <h1>{article.title}</h1>
             <p className="ella-article-lede">{article.lede}</p>
 
-            {/* Author byline card */}
-            <div className="ella-byline">
-              <span className="ella-byline-avatar" aria-hidden="true" />
-              <span className="ella-byline-text">
-                <span className="ella-byline-name">{isEs ? 'Por ' : 'By '}<strong>Jessica Zavala</strong></span>
-              </span>
-            </div>
 
+            <div className="ella-article-metarow">
             <div className="ella-article-meta">
               <span>{article.published}</span>
               {article.updated && article.updated !== article.published ? (<><span className="dot" /><span>{isEs ? 'Actualizado ' : 'Updated '}{article.updated}</span></>) : null}
@@ -107,6 +101,7 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
               </button>
               {copied ? <span className="ella-share-copied">{isEs ? '¡Copiado!' : 'Copied!'}</span> : null}
+            </div>
             </div>
 
             {/* Key takeaways */}
@@ -141,11 +136,14 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
                 if (block.kind === 'p')    return <p key={i}>{block.text}</p>;
                 if (block.kind === 'h2')   return <h2 key={i} id={slugify(block.text)}>{block.text}</h2>;
                 if (block.kind === 'pull') return <div key={i} className="ella-article-pull">{block.text}</div>;
-                if (block.kind === 'ul')   return (
-                  <ul key={i} style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--ella-clay-700)', paddingLeft: 22 }}>
-                    {block.items.map((it, j) => <li key={j}>{it}</li>)}
-                  </ul>
-                );
+                if (block.kind === 'ul') {
+                  const short = block.items.every((it) => String(it).length <= 34);
+                  return (
+                    <ul key={i} className={short ? 'ella-article-chips' : 'ella-article-list'}>
+                      {block.items.map((it, j) => <li key={j}>{it}</li>)}
+                    </ul>
+                  );
+                }
                 if (block.kind === 'table') return (
                   <table key={i} className="ella-protein-table">
                     <thead><tr>{block.headers.map((h, j) => <th key={j}>{h}</th>)}</tr></thead>
@@ -157,27 +155,6 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
                 return null;
               })}
             </div>
-
-            {/* Questions to bring to the doctor */}
-            {article.doctorQuestions && article.doctorQuestions.length ? (
-              <section className="ella-docq" aria-labelledby="docq-hd">
-                <div className="ella-docq-top">
-                  <h2 id="docq-hd">{isEs ? 'Preguntas para tu médico' : 'Questions for your doctor'}</h2>
-                  <button type="button" className="ella-docq-print" onClick={() => window.print()}>
-                    {isEs ? 'Imprimir' : 'Print'}
-                  </button>
-                </div>
-                <p className="ella-docq-note">
-                  {isEs ? 'Llévalas a tu próxima cita, en papel o en tu teléfono.' : 'Take these to your next appointment, on paper or on your phone.'}
-                </p>
-                <ol>
-                  {article.doctorQuestions.map((dq, i) => <li key={i}>{dq}</li>)}
-                </ol>
-                <a href="#" className="ella-docq-gloss" onClick={(e) => { e.preventDefault(); setRoute('glossary'); window.scrollTo({ top: 0 }); }}>
-                  {isEs ? '¿Tu médico habla inglés? Ve el glosario de términos →' : 'Doctor speaks English only? See the Spanish–English glossary →'}
-                </a>
-              </section>
-            ) : null}
 
             {/* Medical disclaimer */}
             <aside className="ella-disclaimer">
@@ -191,8 +168,8 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
 
             {/* References */}
             {article.references && article.references.length ? (
-              <section className="ella-refs">
-                <h2 className="ella-refs-hd">{isEs ? 'Referencias' : 'References'}</h2>
+              <details className="ella-refs">
+                <summary className="ella-refs-hd">{isEs ? 'Referencias' : 'References'} ({article.references.length})<IconDown width="16" height="16" /></summary>
                 <ol>
                   {article.references.map((r, i) => (
                     <li key={i}>
@@ -204,7 +181,7 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
                     </li>
                   ))}
                 </ol>
-              </section>
+              </details>
             ) : null}
 
             {/* Share again */}
@@ -221,7 +198,7 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
             </div>
 
             {/* More to read */}
-            <div style={{ marginTop: 72, paddingTop: 40, borderTop: '1px solid var(--border-default)' }}>
+            <div className="ella-keepreading">
               <div className="ella-eyebrow" style={{ marginBottom: 16 }}>{isEs ? 'SIGUE LEYENDO' : 'KEEP READING'}</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
                 {getArticles(lang).filter(a => a.id !== article.id).slice(0, 3).map((a) => (

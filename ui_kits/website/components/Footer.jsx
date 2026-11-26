@@ -1,70 +1,94 @@
-// Footer: link columns, then one
-// bottom rule with brand, contact, copyright, and the medical disclaimer.
+// Footer, modeled on the Ella Wellness site: a deep band with a centered
+// booking call-to-action, four link columns, then the legal notes and
+// copyright row. The call-to-action is skipped on the homepage, which already
+// ends with the consultation section.
 
-export function Footer({ lang, setRoute }) {
+export function Footer({ lang, setLang, route, setRoute }) {
   const isEs = lang === 'es';
+  const L = window.ELLA_LINKS || {};
+  const email = L.email || 'info@ellabienestar.com';
+  const go = (r) => (e) => { e.preventDefault(); setRoute(r); window.scrollTo({ top: 0 }); };
 
-  const cols = [
-    {
-      title: isEs ? 'Explora' : 'Explore',
-      links: [
-        { label: isEs ? 'Artículos' : 'Articles', onClick: () => setRoute('articles') },
-        { label: isEs ? 'Suplementos' : 'Supplements', onClick: () => setRoute('supplements') },
-        { label: isEs ? 'Recursos' : 'Resources', onClick: () => setRoute('resources') },
-        { label: isEs ? 'Glosario' : 'Glossary', onClick: () => setRoute('glossary') },
-        { label: isEs ? 'Atención de bajo costo' : 'Care on a budget', onClick: () => setRoute('budget') },
-        { label: isEs ? 'Cuándo ir al médico' : 'When to see a doctor', onClick: () => setRoute('urgent') },
-      ],
-    },
-    {
-      title: 'Ella',
-      links: [
-        { label: isEs ? 'Haz una cita' : 'Book a consultation', href: (window.ELLA_LINKS && window.ELLA_LINKS.booking) || '#' },
-        ...(window.ELLA_LINKS && window.ELLA_LINKS.instagram ? [{ label: 'Instagram', href: window.ELLA_LINKS.instagram }] : []),
-        ...(window.ELLA_LINKS && window.ELLA_LINKS.whatsappChannel ? [{ label: isEs ? 'Canal de WhatsApp' : 'WhatsApp Channel', href: window.ELLA_LINKS.whatsappChannel }] : []),
-      ],
-    },
+  const explore = [
+    { label: isEs ? 'Inicio' : 'Home', route: 'home' },
+    { label: isEs ? 'Síntomas' : 'Symptoms', route: 'symptoms' },
+    { label: isEs ? 'Artículos' : 'Articles', route: 'articles' },
+    { label: isEs ? 'Suplementos' : 'Supplements', route: 'supplements' },
+    { label: isEs ? 'Recursos' : 'Resources', route: 'resources' },
+  ];
+  const help = [
+    { label: isEs ? 'Cuestionario personal' : 'Personal check-in', route: 'quiz' },
+    { label: isEs ? 'Glosario' : 'Glossary', route: 'glossary' },
+    { label: isEs ? 'Atención de bajo costo' : 'Care on a budget', route: 'budget' },
+    { label: isEs ? 'Cuándo ir al médico' : 'When to see a doctor', route: 'urgent' },
   ];
 
   return (
-    <footer className="ella-footer">
-      <div className="ella-footer-inner">
+    <footer className={'ella-ft' + (route === 'home' ? ' is-home' : '')}>
+      {route !== 'home' ? (
+        <div className="ella-ft-cta">
+          <h2>{isEs ? 'Haz una cita' : 'Book a consultation'}</h2>
+          <p>{isEs ? '30 minutos, en español o en inglés.' : '30 minutes, in English or Spanish.'}</p>
+          <a className="ella-ft-cta-btn" href={L.booking || '#'} target="_blank" rel="noopener noreferrer">
+            {isEs ? 'Hacer una cita' : 'Book a consultation'}
+          </a>
+        </div>
+      ) : (
+        <div className="ella-ft-sep" aria-hidden="true">
+          <span className="ella-ft-sep-badge"><LogoMarkSvg size={26} color="#d9b3c4" center="#f6ece9" /></span>
+        </div>
+      )}
 
-        <div className="ella-footer-top">
-          <div className="ella-footer-cols">
-            {cols.map((c) => (
-              <div key={c.title} className="ella-footer-col">
-                <h5>{c.title}</h5>
-                <ul>
-                  {c.links.map((l, i) => (
-                    <li key={i}>
-                      {l.href
-                        ? <a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
-                        : <a href="#" onClick={(e) => { e.preventDefault(); l.onClick(); }}>{l.label}</a>}
-                    </li>
-                  ))}
-                </ul>
+      <div className="ella-ft-inner">
+        <div className="ella-ft-cols">
+          <div className="ella-ft-brand">
+            <div className="ella-ft-logo">
+              <LogoEllaSvg width={150} color="#f6ece9" accent="#d9b3c4" />
+              <span className="ella-ft-logo-by">Jessica Zavala</span>
+            </div>
+            <p>{isEs ? 'Información clara sobre la menopausia, en español y en inglés.' : 'Clear menopause information, in English and Spanish.'}</p>
+            {setLang ? (
+              <div className="ella-ft-lang">
+                <button type="button" className={lang === 'en' ? 'is-active' : ''} onClick={() => setLang('en')}>English</button>
+                <span aria-hidden="true">|</span>
+                <button type="button" className={lang === 'es' ? 'is-active' : ''} onClick={() => setLang('es')}>Español</button>
               </div>
-            ))}
+            ) : null}
+          </div>
+
+          <nav className="ella-ft-col" aria-label={isEs ? 'Explora' : 'Explore'}>
+            <h3>{isEs ? 'Explora' : 'Explore'}</h3>
+            <ul>{explore.map((l) => <li key={l.route}><a href="#" onClick={go(l.route)}>{l.label}</a></li>)}</ul>
+          </nav>
+
+          <nav className="ella-ft-col" aria-label={isEs ? 'Ayuda' : 'Help'}>
+            <h3>{isEs ? 'Ayuda' : 'Help'}</h3>
+            <ul>{help.map((l) => <li key={l.route}><a href="#" onClick={go(l.route)}>{l.label}</a></li>)}</ul>
+          </nav>
+
+          <div className="ella-ft-col">
+            <h3>{isEs ? 'Contáctanos' : 'Reach us'}</h3>
+            <ul>
+              <li><a href={'mailto:' + email}>{email}</a></li>
+              <li><a href={L.booking || '#'} target="_blank" rel="noopener noreferrer">{isEs ? 'Hacer una cita' : 'Book a consultation'}</a></li>
+            </ul>
           </div>
         </div>
 
-        <div className="ella-footer-divider" />
+        <div className="ella-ft-rule" />
 
-        <div className="ella-footer-bottom">
-          <div className="ella-footer-bottom-brand">
-            <LogoEllaSvg width={92} />
-            <span className="ella-footer-copy">
-              © {new Date().getFullYear()} · {isEs ? 'Por Jessica Zavala' : 'By Jessica Zavala'}
-            </span>
-            <a href={'mailto:' + ((window.ELLA_LINKS && window.ELLA_LINKS.email) || 'info@ellabienestar.com')}>{(window.ELLA_LINKS && window.ELLA_LINKS.email) || 'info@ellabienestar.com'}</a>
-          </div>
-          <a href="#" className="ella-footer-privacy" onClick={(e) => { e.preventDefault(); setRoute('privacy'); }}>{isEs ? 'Privacidad' : 'Privacy'}</a>
-          <div className="ella-footer-disclaim">
-            {isEs
-              ? 'Solo informativo. No sustituye la consulta con tu médico.'
-              : 'Informational only, does not replace medical advice.'}
-          </div>
+        <div className="ella-ft-legal">
+          <p>{isEs
+            ? 'Este sitio comparte información general sobre la menopausia. No sustituye la consulta, el diagnóstico ni el tratamiento de un profesional de la salud.'
+            : 'This website shares general information about menopause. It does not replace consultation, diagnosis, or treatment by a healthcare professional.'}</p>
+          <p>{isEs
+            ? 'Si tienes una emergencia médica, llama al 911 o ve a la sala de emergencias más cercana.'
+            : 'If you have a medical emergency, call 911 or go to the nearest emergency room.'}</p>
+        </div>
+
+        <div className="ella-ft-bottom">
+          <span>© {new Date().getFullYear()} Ella Bienestar.{isEs ? ' Todos los derechos reservados.' : ' All rights reserved.'}</span>
+          <a href="#" onClick={go('privacy')}>{isEs ? 'Privacidad' : 'Privacy policy'}</a>
         </div>
       </div>
     </footer>

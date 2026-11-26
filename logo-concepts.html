@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ella Logo Concepts</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  :root{--ink:#33242c;--cream:#f6ece9;--pink:#d9b3c4;--rose:#7e5266;--rose-deep:#653f52;--canvas:#ece0de;--muted:#6f6250}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--canvas);color:#2f261d;font-family:var(--font-body,'Nunito',sans-serif)}
+  .wrap{max-width:1180px;margin:0 auto;padding:48px 24px 72px}
+  h1{font-family:var(--font-display,'DM Serif Display',serif);font-weight:400;font-size:clamp(30px,4vw,44px);margin:0 0 8px;text-align:center}
+  .intro{text-align:center;color:var(--muted);margin:0 auto 40px;max-width:58ch;line-height:1.6}
+  .grid{display:grid;grid-template-columns:1fr;gap:22px}
+  @media (min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+  .card{background:#e6d7d8;border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+  .num{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);font-weight:700}
+  .card h2{font-family:var(--font-display,'DM Serif Display',serif);font-weight:400;font-size:26px;margin:4px 0 6px}
+  .card p{margin:0;color:#3f342a;line-height:1.55;font-size:15px}
+  .meta{padding:22px 24px 24px}
+  .stage{display:flex;align-items:center;justify-content:center;min-height:200px;padding:28px}
+  .stage.dark{background:var(--ink)}
+  .stage.light{background:var(--canvas);border-top:1px solid rgba(47,38,29,.06)}
+  .bar{display:flex;align-items:center;gap:14px;background:var(--ink);padding:14px 20px;border-top:1px solid rgba(246,236,233,.08)}
+  .bar small{margin-left:auto;color:rgba(246,236,233,.6);font-size:12px;letter-spacing:.04em}
+  .lockup{display:inline-flex;align-items:center;gap:12px}
+  .lockup .txt{display:flex;flex-direction:column;line-height:1}
+  .lockup .word{font-family:var(--font-display,'DM Serif Display',serif);font-size:44px;letter-spacing:-.01em}
+  .lockup .by{font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-top:6px}
+  .lockup.sm .word{font-size:28px}
+  .lockup.sm .by{font-size:8.5px;letter-spacing:.2em;margin-top:4px}
+  .on-dark .word{color:var(--cream)} .on-dark .by{color:rgba(246,236,233,.72)}
+  .on-light .word{color:var(--ink)} .on-light .by{color:var(--rose-deep)}
+  .stacked{flex-direction:column;gap:10px;text-align:center}
+  .stacked .txt{align-items:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Three logo ideas for Ella</h1>
+  <p class="intro">Each one is shown at header size on the deep plum, large on the plum, and large on the light page. All three use the site’s plum palette and display font, with “Jessica Zavala” underneath.</p>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+// Each mark is drawn in two colors: a main stroke/fill and an accent.
+const MARKS = {
+  bloom: (main, accent) => `
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <g transform="translate(24 24)">
+        ${[0,72,144,216,288].map(a => `<ellipse cx="0" cy="-11" rx="5.6" ry="10" transform="rotate(${a})" fill="${accent}" fill-opacity=".85"/>`).join('')}
+        <circle r="4.2" fill="${main}"/>
+      </g>
+    </svg>`,
+  hands: (main, accent) => `
+    <svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 24 C5 35 13 43 24 43 C35 43 43 35 43 24" stroke="${main}" stroke-width="1.9"/>
+      <path d="M5 24 C6.5 21.5 10 21.5 11 25" stroke="${main}" stroke-width="1.9"/>
+      <path d="M43 24 C41.5 21.5 38 21.5 37 25" stroke="${main}" stroke-width="1.9"/>
+      <path d="M24 39 L24 22" stroke="${main}" stroke-width="1.6"/>
+      <path d="M24 31 Q19 30 17.5 26" stroke="${main}" stroke-width="1.4"/>
+      <g transform="translate(24 15)">
+        ${[0,72,144,216,288].map(a => `<ellipse cx="0" cy="-4.6" rx="2.6" ry="4.4" transform="rotate(${a})" fill="${accent}"/>`).join('')}
+        <circle r="1.9" fill="${main}"/>
+      </g>
+    </svg>`,
+  arch: (main, accent) => `
+    <svg viewBox="0 0 44 52" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 50 V22 A18 18 0 0 1 40 22 V50 Z" stroke="${main}" stroke-width="1.8"/>
+      <text x="22" y="42" text-anchor="middle" font-family="DM Serif Display, serif" font-size="24" fill="${main}" stroke="none">E</text>
+      <path d="M27.5 21 Q31 13.5 37 12.5 Q34 19 27.5 21 Z" fill="${accent}" stroke="none"/>
+      <path d="M27.5 21 Q29 17 32.5 15" stroke="${main}" stroke-width="1.1"/>
+    </svg>`,
+};
+
+const IDEAS = [
+  { key:'bloom', title:'Bloom', size:[40,64],
+    why:'A simple five-petal flower, taken from the homepage photo. Soft and warm, and it still reads at icon size, like a browser tab.' },
+  { key:'hands', title:'Open hands', size:[40,64],
+    why:'Two cupped hands holding a small bloom, the same gesture as the hero photo. It says care and support, and fits a consultation-led site.' },
+  { key:'arch', title:'Arch monogram', size:[34,54],
+    why:'A serif “E” inside an arch, with one leaf. The most classic and editorial of the three, and the easiest to stamp on social posts or a PDF.' },
+];
+
+function lockup(key, variant, size, small, stacked){
+  const dark = variant === 'dark';
+  const main = dark ? '#f6ece9' : '#33242c';
+  const accent = dark ? '#d9b3c4' : '#7e5266';
+  const svg = MARKS[key](main, accent).replace('<svg', `<svg width="${size}" height="${size}"`);
+  return `<span class="lockup ${small?'sm':''} ${stacked?'stacked':''} on-${variant}">${svg}
+    <span class="txt"><span class="word">Ella</span><span class="by">Jessica Zavala</span></span></span>`;
+}
+
+document.getElementById('grid').innerHTML = IDEAS.map((d, i) => `
+  <article class="card">
+    <div class="bar">${lockup(d.key,'dark',d.size[0],true)}<small>Header</small></div>
+    <div class="stage dark">${lockup(d.key,'dark',d.size[1],false,true)}</div>
+    <div class="stage light">${lockup(d.key,'light',d.size[1],false)}</div>
+    <div class="meta">
+      <div class="num">Idea ${i+1}</div>
+      <h2>${d.title}</h2>
+      <p>${d.why}</p>
+    </div>
+  </article>`).join('');
+</script>
+</body>
+</html>

@@ -1,32 +1,35 @@
 // Inline SVG assets, used instead of <img src="..."> so the bundle is
 // fully self-contained when shared as a single HTML file.
 
+// Bloom: five soft petals around a small center, taken from the homepage photo.
+const BLOOM_ANGLES = [0, 72, 144, 216, 288];
+function BloomPetals({ petal, center }) {
+  return (
+    <>
+      {BLOOM_ANGLES.map((a) => (
+        <ellipse key={a} cx="0" cy="-11" rx="5.6" ry="10" transform={'rotate(' + a + ')'} fill={petal} fillOpacity="0.88" />
+      ))}
+      <circle r="4.2" fill={center} />
+    </>
+  );
+}
+
 function LogoEllaSvg({ width = 160, color = '#2f261d', accent = '#7e5266', ...rest }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" width={width} height={width * (96/320)} {...rest}>
-      <g transform="translate(8, 22)" fill="none" stroke={accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M28 50 Q28 28 28 8" />
-        <path d="M28 38 Q18 34 12 24" />
-        <path d="M28 32 Q38 28 44 18" />
-        <path d="M28 24 Q22 20 18 12" />
-        <path d="M28 18 Q34 14 38 6" />
-        <circle cx="28" cy="6" r="2" fill={accent} />
+      <g transform="translate(32, 48) scale(1.3)">
+        <BloomPetals petal={accent} center={color} />
       </g>
-      <text x="68" y="68" style={{ fontFamily: "'DM Serif Display', 'Cormorant Garamond', Georgia, serif", fontSize: 64, fill: color }}>Ella</text>
+      <text x="74" y="68" style={{ fontFamily: "'DM Serif Display', 'Cormorant Garamond', Georgia, serif", fontSize: 64, fill: color }}>Ella</text>
     </svg>
   );
 }
 
-function LogoMarkSvg({ size = 32, color = '#7e5266', ...rest }) {
+function LogoMarkSvg({ size = 32, color = '#7e5266', center = '#33242c', ...rest }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width={size} height={size} {...rest}>
-      <g transform="translate(18, 6)" fill="none" stroke={color} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 52 Q14 30 14 6" />
-        <path d="M14 40 Q4 36 -2 26" />
-        <path d="M14 34 Q24 30 30 20" />
-        <path d="M14 26 Q8 22 4 14" />
-        <path d="M14 20 Q20 16 24 8" />
-        <circle cx="14" cy="6" r="2" fill={color} />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size} {...rest}>
+      <g transform="translate(24, 24)">
+        <BloomPetals petal={color} center={center} />
       </g>
     </svg>
   );

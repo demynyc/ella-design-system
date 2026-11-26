@@ -1805,17 +1805,6 @@ button { font: inherit; cursor: pointer; }
 .ella-footer-privacy:hover,.ella-newsletter-privacy a:hover{color:var(--ella-rose-deep)}
 
 /* ---------- Doctor questions (end of each article) ---------- */
-.ella-docq{margin-top:40px;padding:24px 26px;border-radius:18px;background:var(--ella-blush-50);border:1px solid var(--ella-rose-300)}
-.ella-docq-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ella-docq h2{font-family:var(--font-display);font-size:var(--section-title,24px);line-height:1.15;color:var(--ella-clay-900);margin:0}
-.ella-docq-print{border:1px solid var(--ella-rose-300);background:var(--ella-cream-50);color:var(--ella-rose-deep);border-radius:100px;padding:6px 14px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer}
-.ella-docq-print:hover{background:var(--ella-rose);color:var(--ella-cream-50);border-color:var(--ella-rose)}
-.ella-docq-note{font-size:14.5px;color:var(--ella-clay-700);margin:8px 0 14px}
-.ella-docq ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:9px}
-.ella-docq li{font-size:16px;line-height:1.55;color:var(--ella-clay-900);padding-left:4px}
-.ella-docq li::marker{color:var(--ella-rose-deep);font-weight:700}
-.ella-docq-gloss{display:inline-block;margin-top:16px;font-size:14px;font-weight:600;color:var(--ella-rose-deep);text-decoration:none}
-.ella-docq-gloss:hover{text-decoration:underline}
 
 /* ---------- Glossary ---------- */
 .ella-gloss-lede{font-size:16.5px;line-height:1.6;color:var(--ella-clay-700);margin:12px 0 0;max-width:60ch}
@@ -1842,8 +1831,7 @@ button { font: inherit; cursor: pointer; }
 
 /* Print: just the article and its questions */
 @media print{
-  .ella-header,.ella-footer,.ella-share-row,.ella-article-toc-rail,.ella-docq-print,.ella-docq-gloss{display:none !important}
-  .ella-docq{break-inside:avoid;background:none;border:1px solid #999}
+  .ella-header,.ella-footer,.ella-share-row,.ella-article-toc-rail{display:none !important}
 }
 
 /* Search: highlighted matches + excerpts */
@@ -1964,8 +1952,6 @@ main section + section:not(.ella-bg-cream):not(.ella-bg-blush){border-top:1px so
   .ella-consult{gap:22px}
   .ella-consult-actions{flex-direction:column;align-items:stretch}
   .ella-consult-actions .ella-btn{justify-content:center}
-  .ella-docq{padding:20px 18px}
-  .ella-docq-top{flex-wrap:wrap}
   .ella-urgent-box,.ella-budget-item,.ella-sym-why,.ella-sym-doctor{padding:18px 16px}
   .ella-sym-next{flex-direction:column;align-items:stretch}
   .ella-sym-next .ella-btn{justify-content:center;text-align:center}
@@ -2089,8 +2075,11 @@ html,body{overflow-x:clip}
   .ella-hero-ornament.br{animation-duration:9s;animation-delay:-2s}
 
   /* --- Cards cascade in when their section scrolls into view --- */
+  /* Only cards in a section still waiting to animate in start hidden; cards in
+     sections already on screen are always visible. */
+  .ella-reveal:not(.is-visible) :is(.ella-topic,.ella-supp-card,.ella-article-card,.ella-res-card,.ella-resource-card,.ella-budget-item,.ella-sym-card),
+  .ella-reveal:not(.is-visible) .ella-topics-syms .ella-hero-sym{opacity:0;transform:translateY(18px) scale(.985)}
   .ella-topic,.ella-supp-card,.ella-article-card,.ella-topics-syms .ella-hero-sym,.ella-res-card,.ella-resource-card,.ella-budget-item,.ella-sym-card{
-    opacity:0;transform:translateY(18px) scale(.985);
     transition:opacity 650ms cubic-bezier(.16,1,.3,1),transform 650ms cubic-bezier(.16,1,.3,1),box-shadow 220ms var(--ease-out),border-color 220ms var(--ease-out),background 220ms var(--ease-out);
   }
   .is-visible .ella-topic,.is-visible .ella-supp-card,.is-visible .ella-article-card,.is-visible .ella-topics-syms .ella-hero-sym,
@@ -2279,3 +2268,337 @@ a.ella-btn.ella-btn-whatsapp,a.ella-btn.ella-btn-whatsapp:hover{color:#fff}
 #root .ella-topics-syms .ella-hero-sym{background:transparent;border-color:var(--ella-sand-300)}
 #root .ella-topics-syms .ella-hero-sym:hover{background:var(--ella-rose);color:var(--ella-cream-50);border-color:var(--ella-rose)}
 #root .ella-topics-syms .ella-hero-sym.is-more{background:none;border-color:transparent}
+
+/* ==========================================================================
+   Homepage hero: full-bleed photo behind the intro, softened with opacity
+   ========================================================================== */
+#root .ella-hero-photo{position:relative;overflow:hidden;isolation:isolate;min-height:min(84vh,720px);display:flex;align-items:center;padding-top:56px;padding-bottom:56px}
+#root .ella-hero-photo > .ella-container{position:relative;z-index:1;width:100%}
+#root .ella-hero-bg{position:absolute;inset:0;z-index:0;background:url('assets/photos/hands-flower.jpg') 50% 45%/cover no-repeat;opacity:.62}
+#root .ella-hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(236,224,222,.55) 0%,rgba(236,224,222,.15) 55%,rgba(236,224,222,0) 100%)}
+#root .ella-hero-photo .ella-hero-grid{grid-template-columns:1fr;max-width:600px}
+#root .ella-hero-photo .ella-hero-grid > div:first-child{background:rgba(236,224,222,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:26px}
+#root .ella-hero-photo .ella-hero-ornament{display:none}
+@media (max-width:700px){#root .ella-hero-photo{min-height:0}#root .ella-hero-bg{background-position:50% 40%}}
+
+/* Consultation without the portrait: one centered column */
+#root .ella-consult.ella-consult-solo{grid-template-columns:1fr !important;max-width:760px;margin:0 auto;text-align:center}
+#root .ella-consult-solo .ella-consult-list{text-align:left;max-width:520px;margin-left:auto;margin-right:auto}
+#root .ella-consult-solo .ella-consult-actions{justify-content:center}
+#root .ella-consult-solo .ella-consult-note{margin-left:auto;margin-right:auto}
+#root .ella-hero-photo .ella-hero-grid{max-width:520px}
+@media (min-width:900px){#root .ella-hero-bg{transform:translateX(15%) scale(1.3);transform-origin:50% 50%}}
+
+/* ==========================================================================
+   Footer (modeled on the Ella Wellness site): deep band, centered CTA,
+   four columns, legal notes, copyright row
+   ========================================================================== */
+.ella-ft{--ft-bg:#33242c;--ft-fg:#f6ece9;--ft-muted:rgba(246,236,233,.66);--ft-rule:rgba(246,236,233,.16);
+  background:var(--ft-bg);color:var(--ft-fg);margin-top:56px}
+.ella-ft a{color:var(--ft-fg);text-decoration:none;transition:opacity 160ms var(--ease-out)}
+.ella-ft a:hover{opacity:.72}
+.ella-ft-cta{text-align:center;padding:72px 24px 64px;border-bottom:1px solid var(--ft-rule)}
+.ella-ft-cta h2{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.6vw,44px);line-height:1.1;margin:0;color:var(--ft-fg)}
+.ella-ft-cta p{margin:10px 0 26px;font-size:17px;color:var(--ft-muted)}
+.ella-ft .ella-ft-cta-btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:var(--ft-fg);color:var(--ft-bg);font-weight:600;font-size:16px;box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
+.ella-ft .ella-ft-cta-btn:hover{opacity:1;background:#fff8f5}
+.ella-ft-inner{max-width:var(--content-max);margin:0 auto;padding:56px var(--space-10) 28px}
+@media (min-width:1024px){.ella-ft-inner{padding-left:var(--space-20);padding-right:var(--space-20)}}
+.ella-ft-cols{display:grid;grid-template-columns:1fr;gap:36px}
+@media (min-width:640px){.ella-ft-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:980px){.ella-ft-cols{grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px}}
+.ella-ft-brand p{margin:14px 0 18px;font-size:16px;line-height:1.6;color:var(--ft-muted);max-width:30ch}
+.ella-ft-lang{display:flex;align-items:center;gap:10px;color:var(--ft-muted);font-size:15px}
+.ella-ft-lang button{background:none;border:0;padding:0;font:inherit;color:var(--ft-muted);cursor:pointer}
+.ella-ft-lang button.is-active{color:var(--ft-fg);font-weight:600}
+.ella-ft-col h3{font-family:var(--font-display);font-weight:400;font-size:20px;margin:0 0 14px;color:var(--ft-fg)}
+.ella-ft-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px}
+.ella-ft-col a{font-size:15.5px}
+.ella-ft-rule{height:1px;background:var(--ft-rule);margin:44px 0 24px}
+.ella-ft-legal{max-width:720px}
+.ella-ft-legal p{margin:0 0 10px;font-size:13.5px;line-height:1.6;color:var(--ft-muted)}
+.ella-ft-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:18px;font-size:13.5px;color:var(--ft-muted)}
+.ella-ft-bottom a{color:var(--ft-muted)}
+
+/* Remaining pale surfaces -> card tint */
+#root :is(.ella-budget-ask,.ella-gloss-callout,.ella-urgent-strip){background:var(--card-rose);border-color:transparent}
+#root .ella-article-filter{background:transparent;border-color:var(--ella-sand-300)}
+#root .ella-article-filter.is-active{background:var(--ella-rose);border-color:var(--ella-rose);color:var(--ella-cream-50)}
+#root .ella-btn-secondary{background:transparent;border-color:var(--ella-sand-300)}
+#root .ella-btn-secondary:hover{background:var(--card-bg)}
+#root .ella-gloss-search{background:var(--card-bg);border-color:transparent}
+
+/* ==========================================================================
+   Supplements page: less text, everything centered
+   ========================================================================== */
+#root .ella-supp-page .ella-supp-intro{max-width:640px;margin:0 auto;text-align:center}
+#root .ella-supp-page .ella-supp-intro .ella-eyebrow{justify-content:center}
+#root .ella-supp-page .ella-supp-lede{margin:14px auto 0;max-width:46ch;font-size:17px}
+/* principles become three quiet pills */
+#root .ella-supp-page .ella-supp-principles{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:26px auto 44px;padding:0;list-style:none;background:none;border:0}
+#root .ella-supp-page .ella-supp-principles li{background:var(--card-bg);border-radius:999px;padding:9px 18px;font-size:14.5px;font-weight:600;color:var(--ella-clay-700)}
+/* section titles centered with a centered accent */
+#root .ella-supp-page .ella-supp-sections{gap:48px}
+#root .ella-supp-page .ella-supp-section-head{justify-content:center;text-align:center;border-bottom:0;padding-bottom:14px;margin-bottom:20px}
+#root .ella-supp-page .ella-supp-section-head::after{left:50%;transform:translateX(-50%);bottom:0;width:44px}
+/* cards: centered, wrap as a centered row */
+#root .ella-supp-page .ella-supp-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+#root .ella-supp-page .ella-supp-card{flex:0 1 300px;align-items:center;text-align:center;padding:26px 24px}
+#root .ella-supp-page .ella-supp-card-top{justify-content:center}
+#root .ella-supp-page .ella-supp-card-arrow{display:none}
+#root .ella-supp-page .ella-supp-card-desc{font-size:15px;max-width:28ch;margin:0 auto}
+/* FAQ: centered block */
+#root .ella-supp-page .ella-supp-faq{text-align:center;border-top:0;margin-top:64px;padding-top:0}
+#root .ella-supp-page .ella-supp-faq-list{margin:22px auto 0;max-width:680px;text-align:left}
+#root .ella-supp-page .ella-supp-disc{margin:40px auto 0;text-align:center;font-size:14px;font-style:italic;color:var(--ella-taupe-500)}
+@media (max-width:640px){#root .ella-supp-page .ella-supp-card{flex-basis:100%}}
+
+/* ==========================================================================
+   One palette: plum-rose only. Green (sage) and lavender (plum-violet)
+   families are remapped to plum-rose shades for the whole website.
+   ========================================================================== */
+:root{
+  --ella-ink:#33242c;            /* deep plum: header, consultation band, footer */
+  --ella-ink-fg:#f6ece9;
+  --ella-ink-muted:rgba(246,236,233,.68);
+  --ella-sage-100:#ead6de; --ella-sage-300:#c299ac; --ella-sage-500:#7e5266; --ella-sage-700:#653f52;
+  --ella-plum-100:#e3ccd6; --ella-plum-300:#b48da0; --ella-plum-500:#6e4559; --ella-plum-700:#4e2f3e;
+  --card-sage:#e6d0d9; --card-sage-hover:#ddc4cf;
+  --card-plum:#e1cad4; --card-plum-hover:#d8bdc9;
+  --btn-tint:#e2c9d4; --btn-tint-hover:#d8bac8;
+}
+
+/* ---------- Buttons & chips: tinted, readable ---------- */
+#root .ella-btn-secondary{background:var(--btn-tint);border-color:transparent;color:var(--ella-rose-deep);font-weight:600}
+#root .ella-btn-secondary:hover{background:var(--btn-tint-hover);color:var(--ella-terracotta)}
+#root .ella-btn-text{color:var(--ella-rose-deep);font-weight:600}
+#root .ella-article-filter{background:var(--btn-tint);border-color:transparent;color:var(--ella-rose-deep)}
+#root .ella-article-filter:hover{background:var(--btn-tint-hover)}
+#root .ella-article-filter.is-active{background:var(--ella-rose);border-color:var(--ella-rose);color:var(--ella-cream-50)}
+#root .ella-hero-sym,#root .ella-topics-syms .ella-hero-sym{background:var(--btn-tint);border-color:transparent;color:var(--ella-rose-deep)}
+#root .ella-hero-sym:hover,#root .ella-topics-syms .ella-hero-sym:hover{background:var(--ella-rose);color:var(--ella-cream-50);border-color:var(--ella-rose)}
+#root .ella-hero-sym.is-more,#root .ella-topics-syms .ella-hero-sym.is-more{background:none;color:var(--ella-rose-deep)}
+#root .ella-supp-page .ella-supp-principles li{background:var(--btn-tint);color:var(--ella-rose-deep)}
+
+/* ---------- Consultation band: same deep plum as the footer ---------- */
+#root section#book{background:var(--ella-ink);color:var(--ella-ink-fg);border-top:0;padding-top:80px;padding-bottom:80px}
+#root section#book .ella-eyebrow{color:var(--ella-ink-muted)}
+#root section#book .ella-eyebrow::after,#root section#book .ella-eyebrow::before{background:var(--ella-ink-muted)}
+#root section#book h2,#root section#book h2 em{color:var(--ella-ink-fg)}
+#root section#book p{color:var(--ella-ink-muted)}
+#root section#book .ella-consult-list li{color:var(--ella-ink-muted);border-color:rgba(246,236,233,.14)}
+#root section#book .ella-consult-list li::before{background:#d9b3c4}
+#root section#book .ella-consult-list strong{color:var(--ella-ink-fg)}
+#root section#book .ella-consult-note{color:rgba(246,236,233,.55)}
+#root section#book .ella-btn-primary{background:var(--ella-ink-fg);color:var(--ella-ink);border-color:transparent;border-radius:999px;padding:14px 28px}
+#root section#book .ella-btn-primary:hover{background:#fff8f5}
+.ella-ft{--ft-bg:var(--ella-ink)}
+.ella-ft.is-home{margin-top:0}
+.ella-ft.is-home .ella-ft-inner{border-top:1px solid rgba(246,236,233,.12)}
+
+/* ---------- Header: same deep plum as the footer ---------- */
+#root .ella-header,#root .ella-header.is-scrolled{background:var(--ella-ink);border-bottom-color:rgba(246,236,233,.1);box-shadow:0 1px 24px -14px rgba(0,0,0,.5);-webkit-backdrop-filter:none;backdrop-filter:none}
+#root .ella-logo-word{color:var(--ella-ink-fg)}
+#root .ella-navlink{color:var(--ella-ink-muted)}
+#root .ella-navlink:hover,#root .ella-navlink.is-active{color:var(--ella-ink-fg)}
+#root .ella-navlink::after,#root .ella-navlink.is-active::after{background:#d9b3c4}
+#root .ella-header .ella-iconbtn{color:var(--ella-ink-fg);background:transparent}
+#root .ella-header .ella-iconbtn:hover{background:rgba(246,236,233,.1);color:var(--ella-ink-fg)}
+#root .ella-header-book{background:var(--ella-ink-fg);color:var(--ella-ink);border-radius:999px}
+#root .ella-header-book:hover{background:#fff8f5;color:var(--ella-ink)}
+#root .ella-langtoggle{background:rgba(246,236,233,.08);border-color:rgba(246,236,233,.16)}
+#root .ella-langtoggle button{color:var(--ella-ink-muted)}
+#root .ella-langtoggle button:hover:not(.is-active){color:var(--ella-ink-fg)}
+#root .ella-langtoggle button.is-active{background:var(--ella-ink-fg);color:var(--ella-ink);box-shadow:none}
+#root .ella-search.is-open .ella-search-input{background:rgba(246,236,233,.1);border-color:rgba(246,236,233,.22);color:var(--ella-ink-fg)}
+#root .ella-search-input::placeholder{color:var(--ella-ink-muted)}
+@media (max-width:899px){
+  #root .ella-mobile-menu{background:var(--ella-ink);border-bottom-color:rgba(246,236,233,.1)}
+  #root .ella-mm-group{border-bottom-color:rgba(246,236,233,.12)}
+  #root .ella-mobile-menu nav a,#root .ella-mobile-menu nav a.ella-mm-top{color:var(--ella-ink-fg);border-bottom-color:rgba(246,236,233,.12)}
+  #root .ella-mobile-menu nav a.is-active,#root .ella-mobile-menu nav a.ella-mm-top.is-active{color:#d9b3c4}
+  #root .ella-mobile-menu nav .ella-mm-subs a{color:var(--ella-ink-muted)}
+  #root .ella-mobile-menu .ella-mobile-menu-book{background:var(--ella-ink-fg);color:var(--ella-ink)}
+}
+#root section#book .ella-consult-body > p{margin-left:auto;margin-right:auto}
+
+/* Buttons and chips use the same filled plum as the primary "Take the check-in" button */
+#root .ella-btn-secondary,
+#root .ella-hero-sym,#root .ella-topics-syms .ella-hero-sym,
+#root .ella-article-filter{background:var(--ella-rose);border-color:var(--ella-rose);color:var(--ella-cream-50)}
+#root .ella-btn-secondary:hover,
+#root .ella-hero-sym:hover,#root .ella-topics-syms .ella-hero-sym:hover,
+#root .ella-article-filter:hover{background:var(--ella-rose-deep);border-color:var(--ella-rose-deep);color:var(--ella-cream-50)}
+/* the selected filter stands out in the deepest plum */
+#root .ella-article-filter.is-active{background:var(--ella-ink);border-color:var(--ella-ink);color:var(--ella-cream-50)}
+#root .ella-hero-sym.is-more,#root .ella-topics-syms .ella-hero-sym.is-more{background:none;border-color:transparent;color:var(--ella-rose-deep)}
+#root .ella-hero-sym.is-more:hover,#root .ella-topics-syms .ella-hero-sym.is-more:hover{background:none;color:var(--ella-ink)}
+
+/* Divider between the consultation band and the footer (homepage) */
+.ella-ft.is-home .ella-ft-inner{border-top:0;padding-top:40px}
+.ella-ft-sep{display:flex;align-items:center;gap:18px;max-width:var(--content-max);margin:0 auto;padding:8px var(--space-10) 0}
+@media (min-width:1024px){.ella-ft-sep{padding-left:var(--space-20);padding-right:var(--space-20)}}
+.ella-ft-sep span{flex:1;height:1px;background:rgba(246,236,233,.28)}
+.ella-ft-sep svg{flex:0 0 auto;opacity:.9}
+
+/* "Jessica Zavala" under the logo, header and footer */
+#root .ella-logo-by{display:block;color:rgba(246,236,233,.72);font-size:10.5px;letter-spacing:.2em;margin-top:4px}
+#root .ella-header.is-scrolled .ella-logo-by{opacity:1}
+.ella-ft-logo{display:inline-flex;flex-direction:column;align-items:flex-start}
+.ella-ft-logo-by{margin:-6px 0 0 48px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,236,233,.72)}
+@media (max-width:520px){#root .ella-logo-by{font-size:8.5px;letter-spacing:.14em}}
+
+/* Strong full-width divider between the consultation band and the footer */
+.ella-ft-sep{display:block;max-width:none;margin:0;padding:0;height:4px;background:#c299ac}
+.ella-ft.is-home .ella-ft-inner{padding-top:56px}
+
+/* Topic tiles: filled plum like the check-in button */
+#root .ella-topic{background:var(--ella-rose);color:var(--ella-cream-50)}
+#root .ella-topic:hover{background:var(--ella-rose-deep)}
+#root .ella-topic .ella-topic-label{color:var(--ella-cream-50)}
+#root .ella-topic .ella-topic-count{color:rgba(248,240,238,.78)}
+#root .ella-topic .ella-topic-icon,#root .ella-topic[data-tone] .ella-topic-icon{color:var(--ella-cream-50);background:transparent}
+#root .ella-topic .ella-topic-arrow{color:var(--ella-cream-50)}
+#root .ella-topic:hover .ella-topic-arrow{color:var(--ella-cream-50)}
+.ella-ft-logo-by{margin-left:35px}
+
+/* Lighter deep plum for header, consultation band and footer */
+:root{--ella-ink:#4b3441}
+
+/* Footer separator: full-width glowing line with a Bloom badge in the middle */
+.ella-ft-sep{position:relative;display:flex;align-items:center;justify-content:center;height:56px;max-width:none;margin:0;padding:0;background:none}
+.ella-ft-sep::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;transform:translateY(-50%);
+  background:linear-gradient(90deg,rgba(217,179,196,.18) 0%,#d9b3c4 18%,#ecd2dd 50%,#d9b3c4 82%,rgba(217,179,196,.18) 100%);
+  box-shadow:0 0 14px rgba(217,179,196,.35)}
+.ella-ft-sep-badge{position:relative;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;
+  background:var(--ella-ink);border:2px solid #d9b3c4;box-shadow:0 0 0 6px var(--ella-ink),0 0 18px rgba(217,179,196,.35)}
+.ella-ft.is-home .ella-ft-inner{padding-top:44px}
+.ella-ft-sep .ella-ft-sep-badge{flex:0 0 52px;height:52px;background:var(--ella-ink)}
+
+/* ==========================================================================
+   Articles, condensed: same content, tighter rhythm
+   ========================================================================== */
+#root .ella-article .ella-article-back{margin-bottom:14px}
+#root .ella-article h1{margin:6px 0 10px}
+#root .ella-article .ella-article-lede{font-size:17px !important;margin:0 0 16px}
+#root .ella-article-metarow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;padding:10px 0;margin:0 0 22px;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+#root .ella-article-metarow .ella-article-meta{margin:0;font-size:13.5px}
+#root .ella-article-metarow .ella-share-row{margin:0}
+#root .ella-takeaways{margin:0 0 8px;padding:18px 22px;background:var(--card-rose);border-left:3px solid var(--ella-rose);border-radius:0 14px 14px 0}
+#root .ella-takeaways-hd{margin-bottom:8px}
+#root .ella-takeaways ul{gap:6px}
+#root .ella-takeaways li{line-height:1.5}
+#root .ella-takeaways li::before{top:8px}
+#root .ella-toc{margin:14px 0 4px;padding:14px 18px;background:var(--card-bg);border:0}
+#root .ella-toc a{padding:7px 0}
+#root .ella-article-body p{line-height:1.62 !important;margin:0 0 14px}
+#root .ella-article-body h2{font-size:23px !important;margin:28px 0 8px !important}
+#root .ella-article-body > :first-child{margin-top:18px}
+#root .ella-article-list{padding-left:20px;margin:0 0 14px;color:var(--ella-clay-700);font-size:16.5px;line-height:1.6}
+#root .ella-article-list li{margin:0 0 5px}
+#root .ella-article-chips{list-style:none;padding:0;margin:2px 0 16px;display:flex;flex-wrap:wrap;gap:8px}
+#root .ella-article-chips li{background:var(--card-rose);color:var(--ella-rose-deep);font-size:15px !important;font-weight:600;line-height:1.3;padding:7px 14px;border-radius:999px}
+#root .ella-article-pull{margin:18px 0 !important;padding:4px 0 4px 18px !important;font-size:19px !important}
+#root .ella-protein-table{margin:6px 0 16px}
+#root .ella-disclaimer{margin:28px 0 0;padding:14px 18px;background:var(--card-bg);border:0}
+#root .ella-disclaimer-hd{margin-bottom:4px}
+#root .ella-disclaimer p{font-size:13.5px;line-height:1.55}
+#root .ella-refs{margin-top:18px;padding-top:0;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+#root .ella-refs > summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;margin:0;padding:14px 2px;font-size:19px !important}
+#root .ella-refs > summary::-webkit-details-marker{display:none}
+#root .ella-refs > summary svg{color:var(--ella-taupe-500);transition:transform 220ms var(--ease-out)}
+#root .ella-refs[open] > summary svg{transform:rotate(180deg)}
+#root .ella-refs ol{gap:10px;padding-bottom:18px}
+#root .ella-refs li{font-size:14px}
+#root .ella-keepreading{margin-top:36px;padding-top:24px;border-top:1px solid var(--border-default)}
+#root .ella-share-row ~ .ella-share-row{margin-top:24px !important}
+
+/* Consultation band, simplified (heading, one line, button) */
+#root section#book{padding-top:88px;padding-bottom:88px}
+#root section#book h2{font-size:clamp(32px,3.8vw,46px) !important;line-height:1.1;margin:0}
+#root section#book .ella-consult-body > p{margin:12px auto 28px;font-size:18px}
+#root section#book .ella-consult-actions{margin-top:0}
+#root section#book .ella-btn-primary{font-size:16.5px;padding:15px 30px}
+
+/* ==========================================================================
+   Homepage hero v3, modeled on the Ella Wellness hero
+   ========================================================================== */
+#root .ella-hero-v3{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:92vh;min-height:92svh;
+  padding:96px 0 104px;margin:0;border-radius:0;background:var(--ella-ink)}
+#root .ella-hero-v3-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+#root .ella-hero-v3-photo{position:absolute;inset:0;background:url('assets/photos/hands-flower.jpg') 50% 45%/cover no-repeat;
+  animation:ella-photo-settle 2.4s cubic-bezier(.2,.7,.2,1) both}
+@media (min-width:900px){#root .ella-hero-v3-photo{background-position:62% 45%}}
+#root .ella-hero-v3-bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(45,30,39,.82) 0%,rgba(45,30,39,.55) 48%,rgba(45,30,39,.42) 70%,rgba(45,30,39,.62) 100%),
+             linear-gradient(0deg,rgba(45,30,39,.45) 0%,rgba(45,30,39,0) 40%)}
+@keyframes ella-photo-settle{from{transform:scale(1.08)}to{transform:scale(1)}}
+
+#root .ella-hero-v3-inner{position:relative;z-index:1;width:100%;display:grid;grid-template-columns:1fr;gap:56px;align-items:center}
+@media (min-width:1000px){#root .ella-hero-v3-inner{grid-template-columns:minmax(0,1fr) auto}}
+
+#root .ella-hero-v3 h1{font-family:var(--font-display);font-weight:400;color:#fffaf7;margin:0;
+  font-size:clamp(52px,7.2vw,100px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
+#root .ella-hero-v3 h1 span{display:block}
+#root .ella-hero-v3 h1 em{font-style:normal;color:inherit}
+#root .ella-hero-v3 p{margin:32px 0 0;max-width:576px;font-size:clamp(19px,1.7vw,24px);line-height:1.4;color:#fffaf7;font-weight:400}
+#root .ella-hero-v3-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+#root .ella-hero-btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:999px;
+  font-family:var(--font-body);font-size:18px;font-weight:600;line-height:1.5;cursor:pointer;white-space:nowrap;
+  transition:background-color .15s cubic-bezier(.4,0,.2,1),color .15s cubic-bezier(.4,0,.2,1),border-color .15s cubic-bezier(.4,0,.2,1)}
+#root .ella-hero-btn.is-solid{background:#fffaf7;color:var(--ella-ink);border:1px solid #fffaf7}
+#root .ella-hero-btn.is-solid:hover{background:#f1dfe7;border-color:#f1dfe7}
+#root .ella-hero-btn.is-ghost{background:transparent;color:#fffaf7;border:1px solid rgba(255,250,247,.7)}
+#root .ella-hero-btn.is-ghost:hover{background:rgba(255,250,247,.12);border-color:#fffaf7}
+#root .ella-hero-btn:focus-visible{outline:2px solid #d9b3c4;outline-offset:3px}
+
+/* Five-step path on the right: the line draws down, each step pops in */
+#root .ella-hero-path{position:relative;list-style:none;margin:0;padding:0;display:none;flex-direction:column;gap:22px}
+@media (min-width:1000px){#root .ella-hero-path{display:flex}}
+#root .ella-hero-path::before{content:"";position:absolute;right:9px;top:14px;bottom:14px;width:2px;background:rgba(255,250,247,.75);
+  transform-origin:center top;transform:scaleY(0);animation:ella-path-draw 1.6s cubic-bezier(.3,0,.3,1) .6s forwards}
+#root .ella-hero-path li{opacity:0;animation:ella-pop .5s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.6s + var(--i,0) * .4s)}
+#root .ella-hero-path button{display:flex;align-items:center;justify-content:flex-end;gap:20px;width:100%;background:none;border:0;padding:0;cursor:pointer;color:#fffaf7;text-align:right}
+#root .ella-hero-path-label{font-family:var(--font-display);font-size:28px;line-height:1.05;letter-spacing:-.015em;transition:color .2s ease}
+#root .ella-hero-path button:hover .ella-hero-path-label{color:#f1cfdc}
+#root .ella-hero-path-node{position:relative;flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--ella-ink);border:2px solid #fffaf7}
+#root .ella-hero-path-node::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#fffaf7}
+#root .ella-hero-path-node.is-first::after{background:#d9b3c4}
+#root .ella-hero-path button:hover .ella-hero-path-node::after{background:#d9b3c4}
+@keyframes ella-path-draw{to{transform:scaleY(1)}}
+@keyframes ella-pop{0%{opacity:0;transform:translateY(6px) scale(.92)}100%{opacity:1;transform:none}}
+
+/* Staggered rise-in for the hero copy */
+@keyframes ella-rise{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
+#root .ella-rise{animation:ella-rise .7s cubic-bezier(.2,.7,.2,1) both}
+#root .ella-rise-1{animation-delay:50ms}
+#root .ella-rise-2{animation-delay:.18s}
+#root .ella-rise-3{animation-delay:.3s}
+#root .ella-rise-4{animation-delay:.45s}
+#root .ella-rise-5{animation-delay:.7s}
+
+@media (max-width:700px){
+  #root .ella-hero-v3{min-height:86svh;padding:72px 0 80px}
+  #root .ella-hero-v3 p{margin-top:22px}
+  #root .ella-hero-v3-ctas{margin-top:30px}
+  #root .ella-hero-btn{font-size:16.5px;padding:13px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  #root .ella-hero-v3-photo,#root .ella-rise,#root .ella-hero-path li,#root .ella-hero-path::before{animation:none;opacity:1;transform:none}
+}
+
+/* Scroll reveal: shorter and gentler */
+.ella-reveal{opacity:0;transform:translateY(16px);transition:opacity 500ms cubic-bezier(.2,.7,.2,1),transform 500ms cubic-bezier(.2,.7,.2,1)}
+.ella-reveal.is-visible{opacity:1;transform:none}
+#root .ella-hero-path{gap:40px}
+@media (min-width:1000px){#root .ella-hero-v3-photo{background-size:128% auto;background-position:16% 46%}}
+
+/* Lighter, warmer plum: header, consultation band, footer and hero shade */
+:root{--ella-ink:#6a4f5f}
+#root .ella-hero-v3-bg::after{
+  background:linear-gradient(90deg,rgba(74,50,64,.64) 0%,rgba(74,50,64,.38) 50%,rgba(74,50,64,.24) 72%,rgba(74,50,64,.42) 100%),
+             linear-gradient(0deg,rgba(74,50,64,.28) 0%,rgba(74,50,64,0) 40%)}
+#root .ella-hero-v3 h1,#root .ella-hero-v3 p,#root .ella-hero-path-label{text-shadow:0 1px 14px rgba(40,24,33,.38)}
+/* Lighter page background and section tint */
+:root{--ella-oat-100:#f3e9e7;--ella-mauve-100:#eee2e4;--bg-canvas:var(--ella-oat-100)}
+body{background:var(--ella-oat-100)}
