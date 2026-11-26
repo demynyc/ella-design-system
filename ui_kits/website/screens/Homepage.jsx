@@ -67,8 +67,8 @@ export function Homepage({ lang, setRoute, setArticleId, openSymptom, goToCatego
             </h1>
             <p className="ella-rise ella-rise-4">
               {isEs
-                ? 'Información y recursos confiables sobre la menopausia, en español y en inglés. Si quieres hablar con alguien, ofrecemos consultas personales.'
-                : 'Trusted information and resources on menopause, in English and Spanish. When you’d like to talk with someone, one-on-one consultations are available.'}
+                ? 'Información y recursos confiables sobre la menopausia, en español y en inglés.'
+                : 'Trusted information and resources on menopause, in English and Spanish.'}
             </p>
             <div className="ella-hero-v3-ctas ella-rise ella-rise-5">
               <button type="button" className="ella-hero-btn is-solid" onClick={() => setRoute('articles')}>
