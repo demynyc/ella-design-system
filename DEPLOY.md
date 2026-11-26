@@ -43,7 +43,7 @@ After that, every push to `main` updates the site.
    | AAAA  | @    | 2606:50c0:8001::153      |
    | AAAA  | @    | 2606:50c0:8002::153      |
    | AAAA  | @    | 2606:50c0:8003::153      |
-   | CNAME | www  | ethanluvr2.github.io     |
+   | CNAME | www  | demynyc.github.io     |
 
    Remove any other A/AAAA records on `@` (for example a registrar parking page).
 

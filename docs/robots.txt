@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ethanluvr2.github.io/ella-design-system/sitemap.xml
+Sitemap: https://demynyc.github.io/ella-design-system/sitemap.xml
