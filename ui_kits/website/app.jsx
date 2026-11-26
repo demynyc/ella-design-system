@@ -152,27 +152,54 @@ function App() {
 
   // Scroll-reveal: fade/slide sections in as they enter the viewport
   React.useEffect(() => {
-    // Only sections that start below the fold fade in, and they start just
-    // before they scroll into view, so nothing on screen is ever hidden.
+    // Scroll reveals, modeled on the Ella Wellness site: headings, text, cards,
+    // photos and footer columns drift up and fade in as they come into view,
+    // cards cascading one after another. Only things that start below the fold
+    // are animated, so nothing already on screen is ever hidden, and anything
+    // added later (filters, pop-ups) simply appears.
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const GROUPS = [
+      ['rv-card', '.ella-topic, .ella-topics-syms .ella-hero-sym, .ella-article-card, .ella-sym-card, .ella-supp-card, .ella-res-card, .ella-resource-card, .ella-budget-item, .ella-supp-principles li, .ella-article-chips li, .ella-checkin-steps li'],
+      ['rv-photo', 'main .ella-photo, main img'],
+      ['rv-head', 'main .ella-eyebrow, main section:not(.ella-hero) h1, main section:not(.ella-hero) h2, main section:not(.ella-hero) h3'],
+      ['rv-text', 'main section:not(.ella-hero) p, main .ella-takeaways, main .ella-article-list, main .ella-article-pull, main table, main details, main .ella-toc, main .ella-btn, main .ella-consult-actions, main .ella-disclaimer'],
+      ['rv-foot', '.ella-ft-cta > *, .ella-ft-brand, .ella-ft-col, .ella-ft-legal, .ella-ft-bottom'],
+    ];
     const fold = window.innerHeight;
-    const targets = [...document.querySelectorAll('main section:not(.ella-hero)')]
-      .filter((el) => el.getBoundingClientRect().top > fold);
-    if (!targets.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
+    const marked = [];
+    GROUPS.forEach(([kind, sel]) => {
+      document.querySelectorAll(sel).forEach((el) => {
+        if (el.closest('.ella-hero, header, .ella-supp-modal-overlay')) return;
+        if (el.parentElement && el.parentElement.closest('.ella-rv')) return; // parent already animates
+        if (el.classList.contains('ella-rv')) return;
+        if (el.getBoundingClientRect().top <= fold) return;
+        el.classList.add('ella-rv', kind);
+        marked.push(el);
       });
-    }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
-    targets.forEach((el) => {
-      el.classList.add('ella-reveal');
-      io.observe(el);
     });
-    return () => io.disconnect();
-  }, [route]);
+    if (!marked.length) return;
+    const timers = [];
+    const io = new IntersectionObserver((entries) => {
+      // Things that arrive together cascade: each one a beat after the last.
+      const arriving = entries.filter((e) => e.isIntersecting)
+        .sort((x, y) => x.boundingClientRect.top - y.boundingClientRect.top || x.boundingClientRect.left - y.boundingClientRect.left);
+      arriving.forEach((e, i) => {
+        const el = e.target;
+        io.unobserve(el);
+        const delay = Math.min(i, 7) * 70;
+        el.style.setProperty('--rv-delay', delay + 'ms');
+        el.classList.add('is-in');
+        // Once it has settled, hand the element back to its normal styles
+        // (so hover effects and transitions behave exactly as before).
+        timers.push(setTimeout(() => {
+          el.classList.remove('ella-rv', 'is-in', 'rv-card', 'rv-photo', 'rv-head', 'rv-text', 'rv-foot');
+          el.style.removeProperty('--rv-delay');
+        }, 1100 + delay));
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    marked.forEach((el) => io.observe(el));
+    return () => { io.disconnect(); timers.forEach(clearTimeout); };
+  }, [route, articleId, symptomId]);
 
 
   let screen = null;

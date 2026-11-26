@@ -2602,3 +2602,24 @@ a.ella-btn.ella-btn-whatsapp,a.ella-btn.ella-btn-whatsapp:hover{color:#fff}
 /* Lighter page background and section tint */
 :root{--ella-oat-100:#f3e9e7;--ella-mauve-100:#eee2e4;--bg-canvas:var(--ella-oat-100)}
 body{background:var(--ella-oat-100)}
+
+/* ==========================================================================
+   Scroll reveals (see app.jsx): elements below the fold drift up and fade in
+   ========================================================================== */
+.ella-rv{opacity:0;will-change:opacity,transform;
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1) var(--rv-delay,0ms),transform .85s cubic-bezier(.2,.7,.2,1) var(--rv-delay,0ms) !important}
+.ella-rv.rv-head{transform:translateY(16px)}
+.ella-rv.rv-text{transform:translateY(20px)}
+.ella-rv.rv-card{transform:translateY(28px) scale(.965)}
+.ella-rv.rv-photo{transform:scale(1.06);opacity:0}
+.ella-rv.rv-foot{transform:translateY(18px)}
+.ella-rv.is-in{opacity:1;transform:none}
+/* Cards keep their own hover lift once revealed (the class is removed after) */
+
+/* Hero photo drifts slower than the page as you scroll (parallax) */
+#root .ella-hero-v3-photo{inset:-14% 0 -14% 0;translate:0 var(--py,0px)}
+
+@media (prefers-reduced-motion:reduce){
+  .ella-rv{opacity:1 !important;transform:none !important;transition:none !important}
+  #root .ella-hero-v3-photo{translate:none}
+}

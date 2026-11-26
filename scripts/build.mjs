@@ -269,10 +269,12 @@ async function renderPage(path, vendor, appJs) {
   for (let i = 0; i < 40 && !w.document.querySelector('#root header'); i++) await new Promise((r) => setTimeout(r, 25));
   await new Promise((r) => setTimeout(r, 60));
   const root = w.document.getElementById('root');
-  root.querySelectorAll('.ella-reveal, .is-visible, .is-scrolled').forEach((el) => {
-    el.classList.remove('ella-reveal', 'is-visible', 'is-scrolled');
+  root.querySelectorAll('.ella-reveal, .is-visible, .is-scrolled, .ella-rv').forEach((el) => {
+    el.classList.remove('ella-reveal', 'is-visible', 'is-scrolled', 'ella-rv', 'is-in', 'rv-card', 'rv-photo', 'rv-head', 'rv-text', 'rv-foot');
     el.style.removeProperty('transition-delay');
+    el.style.removeProperty('--rv-delay');
   });
+  root.querySelectorAll('[style*="--py"]').forEach((el) => el.style.removeProperty('--py'));
   const data = w.eval(`({
     articles: { en: getArticles('en').map((a) => ({ id: a.id, title: a.title, lede: a.lede })),
                 es: getArticles('es').map((a) => ({ id: a.id, title: a.title, lede: a.lede })) },

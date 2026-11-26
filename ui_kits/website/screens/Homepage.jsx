@@ -27,6 +27,24 @@ export function Homepage({ lang, setRoute, setArticleId, openSymptom, goToCatego
       count: -1, onClick: () => { setRoute('supplements'); window.scrollTo({ top: 0 }); } },
   ];
 
+  // Parallax: the hero photo moves at about a third of the scroll speed.
+  React.useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const photo = document.querySelector('.ella-hero-v3-photo');
+    if (!photo) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const y = window.scrollY;
+      if (y > window.innerHeight * 1.2) return; // hero is off screen
+      photo.style.setProperty('--py', Math.round(y * 0.32) + 'px');
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => { window.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+
   function openArticle(id) {
     if (setArticleId) setArticleId(id);
     setRoute('article');
