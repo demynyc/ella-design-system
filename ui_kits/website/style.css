@@ -2192,3 +2192,90 @@ a.ella-btn.ella-btn-whatsapp,a.ella-btn.ella-btn-whatsapp:hover{color:#fff}
 .ella-newsletter-error{font-size:13.5px;line-height:1.5;color:var(--ella-error);margin:10px 0 0}
 .ella-newsletter-error a{color:inherit}
 .ella-newsletter-form .ella-btn:disabled{opacity:.7;cursor:default}
+
+/* ==========================================================================
+   Card refresh: no white surfaces, no borders. Cards sit on a soft tint one
+   step deeper than the page, so they read as calm blocks, not pale boxes.
+   ========================================================================== */
+:root{
+  --card-bg:#e6d7d8;          /* neutral rose-oat card surface */
+  --card-bg-hover:#dfcfd1;
+  --card-rose:#ead6de;  --card-rose-hover:#e3ccd6;
+  --card-sage:#dde2d2;  --card-sage-hover:#d4dac7;
+  --card-plum:#e0d8e6;  --card-plum-hover:#d7cde0;
+  --card-radius:18px;
+}
+
+/* Generic card surfaces across the site */
+#root :is(.ella-pillar-card,.ella-awareness-quiz-preview,.ella-doctor-checklist,.ella-protein-table,
+  .ella-member-card,.ella-infolinks-col,.ella-quiz-banner-card,.ella-stat,.ella-food-card,
+  .ella-resource-col,.ella-article-card-inner,.ella-topic,.ella-sym-card,.ella-sym-why,.ella-sym-block,
+  .ella-urgent-box,.ella-budget-item,.ella-res-card,.ella-resource-card){
+  background:var(--card-bg);
+  border:0;
+  box-shadow:none;
+  border-radius:var(--card-radius);
+}
+#root :is(.ella-pillar-card,.ella-article-card-inner,.ella-topic,.ella-sym-card,.ella-food-card,
+  .ella-res-card,.ella-resource-card,.ella-budget-item):hover{
+  background:var(--card-bg-hover);
+  border:0;
+  box-shadow:none;
+}
+#root .ella-pillar-card::before{display:none}
+#root .ella-pillar-icon{background:transparent;border:0}
+
+/* Quiz answer options: tinted, selected state stays clear */
+#root :is(.ella-quiz-opt,.ella-awareness-opt){background:var(--card-bg);border:1.5px solid transparent}
+#root :is(.ella-quiz-opt,.ella-awareness-opt):hover{background:var(--card-bg-hover);border-color:transparent}
+#root .ella-quiz-opt.is-selected{background:var(--card-rose);border-color:var(--ella-rose)}
+
+/* ---------- Supplements page ---------- */
+#root .ella-supp-principles{background:none;border:0;border-radius:0;gap:14px;overflow:visible}
+#root .ella-supp-principles li{background:var(--card-bg);border-radius:var(--card-radius);padding:22px 24px}
+#root .ella-supp-principles p{font-size:15px}
+
+#root .ella-supp-cards{gap:14px}
+#root .ella-supp-card{
+  display:flex;flex-direction:column;gap:8px;align-items:stretch;
+  padding:22px 24px 24px;
+  background:var(--card-rose);
+  border:0;border-radius:var(--card-radius);
+  box-shadow:none;
+  transition:background-color 200ms var(--ease-out),transform 200ms var(--ease-out);
+}
+#root .ella-supp-card:hover{background:var(--card-rose-hover);box-shadow:none;transform:translateY(-2px)}
+#root .ella-supp-section[data-tone="sage"] .ella-supp-card{background:var(--card-sage)}
+#root .ella-supp-section[data-tone="sage"] .ella-supp-card:hover{background:var(--card-sage-hover)}
+#root .ella-supp-section[data-tone="plum"] .ella-supp-card{background:var(--card-plum)}
+#root .ella-supp-section[data-tone="plum"] .ella-supp-card:hover{background:var(--card-plum-hover)}
+#root .ella-supp-card:focus-visible{outline:2px solid var(--ella-rose);outline-offset:3px}
+#root .ella-supp-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#root .ella-supp-card-name{font-size:21px;line-height:1.2;color:var(--ella-clay-900)}
+#root .ella-supp-card-arrow{flex:0 0 16px;color:var(--ella-rose);opacity:.55;transition:transform 200ms var(--ease-out),opacity 200ms var(--ease-out)}
+#root .ella-supp-section[data-tone="sage"] .ella-supp-card-arrow{color:var(--ella-sage-700)}
+#root .ella-supp-section[data-tone="plum"] .ella-supp-card-arrow{color:var(--ella-plum-500)}
+#root .ella-supp-card:hover .ella-supp-card-arrow{opacity:1;transform:translateX(3px)}
+#root .ella-supp-card-desc{font-size:15.5px;line-height:1.6;color:var(--ella-clay-700)}
+
+/* FAQ: a clean list with dividers instead of stacked boxes */
+#root .ella-supp-faq-list{gap:0;border-top:1px solid var(--border-default)}
+#root .ella-supp-faq-list details{background:none;border:0;border-bottom:1px solid var(--border-default);border-radius:0}
+#root .ella-supp-faq-list details[open] summary{border-bottom:0}
+#root .ella-supp-faq-list summary{padding:18px 2px;font-size:16.5px}
+#root .ella-supp-faq-list details p{padding:0 2px 20px;font-size:15.5px}
+
+/* Supplement detail popup: page-toned instead of white */
+#root .ella-supp-modal{background:var(--ella-oat-100)}
+#root .ella-supp-modal-close{background:var(--card-bg);border:0}
+#root .ella-supp-facts{background:none;border:0;gap:12px;border-radius:0;overflow:visible}
+#root .ella-supp-fact{background:var(--card-bg);border-radius:14px}
+#root .ella-supp-caution{background:var(--card-rose);border:0}
+
+/* Topic tiles: icon sits on the card tint, no pale box */
+#root .ella-topic-icon{background:transparent;width:28px;flex-basis:28px}
+/* "Start with a symptom" panel and its chips */
+#root .ella-topics-syms{background:var(--card-bg);border:0}
+#root .ella-topics-syms .ella-hero-sym{background:transparent;border-color:var(--ella-sand-300)}
+#root .ella-topics-syms .ella-hero-sym:hover{background:var(--ella-rose);color:var(--ella-cream-50);border-color:var(--ella-rose)}
+#root .ella-topics-syms .ella-hero-sym.is-more{background:none;border-color:transparent}

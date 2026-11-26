@@ -210,7 +210,7 @@ export function SupplementsHub({ lang, setRoute }) {
       a:'Some interact. K2 with warfarin, omega-3 and turmeric with blood thinners, fiber with the timing of almost any pill. Bring the actual bottles to your next appointment and go through them with your doctor.' },
   ];
 
-  const toneBg = (tone) => tone === 'rose' ? 'var(--ella-blush-50)' : tone === 'plum' ? 'var(--ella-plum-100)' : 'var(--ella-sage-100)';
+  const toneBg = (tone) => tone === 'rose' ? 'var(--card-rose)' : tone === 'plum' ? 'var(--card-plum)' : 'var(--card-sage)';
   const toneFg = (tone) => tone === 'rose' ? 'var(--ella-rose)' : tone === 'plum' ? 'var(--ella-plum-500)' : 'var(--ella-sage-500)';
   const tagFg  = (tone) => tone === 'rose' ? 'var(--ella-terracotta)' : tone === 'plum' ? 'var(--ella-plum-700)' : 'var(--ella-sage-700)';
 
@@ -257,15 +257,11 @@ export function SupplementsHub({ lang, setRoute }) {
                       onClick={() => setOpen(idx)}
                       aria-haspopup="dialog"
                     >
-                      <span className="ella-supp-card-icon">
-                        <IconDroplet width="18" height="18" />
+                      <span className="ella-supp-card-top">
+                        <span className="ella-supp-card-name">{sup.name}</span>
+                        <IconArrow width="16" height="16" className="ella-supp-card-arrow" aria-hidden="true" />
                       </span>
-                      <span className="ella-supp-card-name">{sup.name}</span>
                       <span className="ella-supp-card-desc">{sup.desc}</span>
-                      <span className="ella-supp-card-more">
-                        {isEs ? 'Ver más' : 'Read more'}
-                        <IconArrow width="13" height="13" />
-                      </span>
                     </button>
                   ) : null)}
                 </div>
@@ -285,7 +281,7 @@ export function SupplementsHub({ lang, setRoute }) {
             </div>
           </div>
 
-          <div style={{ marginTop: 40, padding: '20px 24px', background: 'var(--ella-cream-100)', borderRadius: 16, fontSize: 14, color: 'var(--ella-clay-700)', fontStyle: 'italic', lineHeight: 1.5 }}>
+          <div style={{ marginTop: 40, padding: '20px 24px', background: 'var(--card-bg)', borderRadius: 18, fontSize: 14, color: 'var(--ella-clay-700)', fontStyle: 'italic', lineHeight: 1.5 }}>
             {isEs
               ? 'Habla con tu médico antes de empezar cualquier suplemento, sobre todo si tomas medicamentos. Ella comparte información, no consejo médico.'
               : 'Talk to your doctor before starting any supplement, especially if you take medication. Ella shares information, not personalized medical advice.'}
