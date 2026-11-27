@@ -59,6 +59,9 @@ function buildEllaPath(lang, route, id) {
     : '#/' + lang + (path ? '/' + path : '');
 }
 window.ellaPath = (lang, route, id) => buildEllaPath(lang, route, id);
+// Real addresses for links in the built site (so Google can follow them and
+// "open in new tab" works); clicks are still handled in-page, without a reload.
+window.ellaHref = (lang, route, id) => (ELLA_PATH_MODE ? buildEllaPath(lang === 'es' ? 'es' : 'en', route, id) : '#');
 // First visit: Spanish-speaking browsers open in Spanish.
 function initialEllaLang(fallback) {
   const fromUrl = parseEllaHash().lang;
@@ -219,8 +222,11 @@ function App() {
 
   return (
     <div className={t.showOrnaments ? '' : 'ella-no-ornaments'}>
+      <a className="ella-skip" href="#main" onClick={(e) => { e.preventDefault(); const m = document.getElementById('main'); if (m) { m.focus({ preventScroll: true }); m.scrollIntoView(); } }}>
+        {lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}
+      </a>
       <Header lang={lang} setLang={setLang} route={route} setRoute={setRoute} goToCategory={goToCategory} openArticle={openArticle} openSymptom={openSymptom} />
-      <main key={route} className="ella-main-fade">{screen}</main>
+      <main key={route} id="main" tabIndex={-1} className="ella-main-fade">{screen}</main>
       <Footer lang={lang} setLang={setLang} route={route} setRoute={setRoute} />
 
       <TweaksPanel title="Tweaks">

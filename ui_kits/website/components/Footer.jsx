@@ -58,12 +58,12 @@ export function Footer({ lang, setLang, route, setRoute }) {
 
           <nav className="ella-ft-col" aria-label={isEs ? 'Explora' : 'Explore'}>
             <h3>{isEs ? 'Explora' : 'Explore'}</h3>
-            <ul>{explore.map((l) => <li key={l.route}><a href="#" onClick={go(l.route)}>{l.label}</a></li>)}</ul>
+            <ul>{explore.map((l) => <li key={l.route}><a href={(window.ellaHref ? window.ellaHref(lang, l.route) : '#')} onClick={go(l.route)}>{l.label}</a></li>)}</ul>
           </nav>
 
           <nav className="ella-ft-col" aria-label={isEs ? 'Ayuda' : 'Help'}>
             <h3>{isEs ? 'Ayuda' : 'Help'}</h3>
-            <ul>{help.map((l) => <li key={l.route}><a href="#" onClick={go(l.route)}>{l.label}</a></li>)}</ul>
+            <ul>{help.map((l) => <li key={l.route}><a href={(window.ellaHref ? window.ellaHref(lang, l.route) : '#')} onClick={go(l.route)}>{l.label}</a></li>)}</ul>
           </nav>
 
           <div className="ella-ft-col">
@@ -88,7 +88,7 @@ export function Footer({ lang, setLang, route, setRoute }) {
 
         <div className="ella-ft-bottom">
           <span>© {new Date().getFullYear()} Ella Bienestar.{isEs ? ' Todos los derechos reservados.' : ' All rights reserved.'}</span>
-          <a href="#" onClick={go('privacy')}>{isEs ? 'Privacidad' : 'Privacy policy'}</a>
+          <a href={(window.ellaHref ? window.ellaHref(lang, 'privacy') : '#')} onClick={go('privacy')}>{isEs ? 'Privacidad' : 'Privacy policy'}</a>
         </div>
       </div>
     </footer>

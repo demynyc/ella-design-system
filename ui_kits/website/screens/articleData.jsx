@@ -61,7 +61,7 @@ const ELLA_ARTICLES = {
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
         { source: "National Institute on Aging (NIH)", title: "What Is Menopause?", href: "https://www.nia.nih.gov/health/menopause" },
-        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease" },
+        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.goredforwomen.org/en/know-your-risk/menopause/menopause-and-cardiovascular-risk" },
         { source: "U.S. Office on Women’s Health", title: "Menopause", href: "https://www.womenshealth.gov/menopause" },
       ],
       body: [
@@ -170,7 +170,7 @@ const ELLA_ARTICLES = {
         "10,000 steps daily has been shown to reduce belly fat.",
       ],
       references: [
-        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease" },
+        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.goredforwomen.org/en/know-your-risk/menopause/menopause-and-cardiovascular-risk" },
         { source: "National Heart, Lung, and Blood Institute (NIH)", title: "Heart-healthy eating patterns", href: "https://www.nhlbi.nih.gov/education/dash-eating-plan" },
         { source: "U.S. Department of Health and Human Services", title: "Physical Activity Guidelines for Americans", href: "https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines" },
         { source: "NIH Office of Dietary Supplements", title: "Omega-3 Fatty Acids: Consumer Fact Sheet", href: "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-Consumer/" },
@@ -279,7 +279,7 @@ const ELLA_ARTICLES = {
       references: [
         { source: "The Menopause Society", title: "Menopause information for women", href: "https://www.menopause.org/for-women" },
         { source: "National Institute on Aging (NIH)", title: "What Is Menopause?", href: "https://www.nia.nih.gov/health/menopause" },
-        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease" },
+        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.goredforwomen.org/en/know-your-risk/menopause/menopause-and-cardiovascular-risk" },
         { source: "U.S. Office on Women’s Health", title: "Menopause", href: "https://www.womenshealth.gov/menopause" },
       ],
       body: [
@@ -388,7 +388,7 @@ const ELLA_ARTICLES = {
         "Está comprobado que caminar 10,000 pasos al día ayuda a bajar la grasa del abdomen.",
       ],
       references: [
-        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease" },
+        { source: "American Heart Association", title: "Menopause and Heart Disease", href: "https://www.goredforwomen.org/en/know-your-risk/menopause/menopause-and-cardiovascular-risk" },
         { source: "National Heart, Lung, and Blood Institute (NIH)", title: "Heart-healthy eating patterns", href: "https://www.nhlbi.nih.gov/education/dash-eating-plan" },
         { source: "U.S. Department of Health and Human Services", title: "Physical Activity Guidelines for Americans", href: "https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines" },
         { source: "NIH Office of Dietary Supplements", title: "Omega-3 Fatty Acids: Consumer Fact Sheet", href: "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-Consumer/" },

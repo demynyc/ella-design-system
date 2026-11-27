@@ -267,7 +267,7 @@ export function Header({ lang, setLang, route, setRoute, goToCategory, openArtic
     <header className={'ella-header' + (scrolled ? ' is-scrolled' : '')}>
       <div className={'ella-header-inner' + (searchOpen ? ' is-searching' : '')}>
         <a
-          href="#"
+          href={(window.ellaHref ? window.ellaHref(lang, 'home') : '#')}
           className="ella-logo"
           onClick={(e) => { e.preventDefault(); setRoute('home'); }}
           aria-label="Ella home"
@@ -282,7 +282,7 @@ export function Header({ lang, setLang, route, setRoute, goToCategory, openArtic
           {items.map((it) => (
             <a
               key={it.id}
-              href="#"
+              href={(window.ellaHref ? window.ellaHref(lang, it.route) : '#')}
               className={'ella-navlink' + (route === it.route && !it.category ? ' is-active' : '')}
               onClick={(e) => { e.preventDefault(); handleNav(it); }}
             >{it.label}</a>
@@ -442,21 +442,21 @@ export function Header({ lang, setLang, route, setRoute, goToCategory, openArtic
         const syms = typeof window.getSymptoms === 'function' ? window.getSymptoms(lang) : [];
         const go = (fn) => (e) => { e.preventDefault(); setMenuOpen(false); fn(); window.scrollTo({ top: 0 }); };
         const subs = {
-          symptoms: syms.map((x) => ({ key: x.id, label: x.name, fn: () => openSymptom && openSymptom(x.id) })),
-          articles: cats.map((ct) => ({ key: ct, label: ct, fn: () => goToCategory('articles', ct) })),
+          symptoms: syms.map((x) => ({ key: x.id, label: x.name, href: window.ellaHref ? window.ellaHref(lang, 'symptoms', x.id) : '#', fn: () => openSymptom && openSymptom(x.id) })),
+          articles: cats.map((ct) => ({ key: ct, label: ct, href: window.ellaHref ? window.ellaHref(lang, 'articles') : '#', fn: () => goToCategory('articles', ct) })),
         };
         return (
           <div className="ella-mobile-menu" role="dialog" aria-label={isEs ? 'Menú' : 'Menu'}>
             <nav>
               {items.map((it) => (
                 <div key={it.id} className="ella-mm-group">
-                  <a href="#" className={'ella-mm-top' + (route === it.route ? ' is-active' : '')} onClick={go(() => handleNav(it))}>
+                  <a href={(window.ellaHref ? window.ellaHref(lang, it.route) : '#')} className={'ella-mm-top' + (route === it.route ? ' is-active' : '')} onClick={go(() => handleNav(it))}>
                     {it.label}
                   </a>
                   {subs[it.id] && subs[it.id].length > 0 && (
                     <div className="ella-mm-subs">
                       {subs[it.id].map((sb) => (
-                        <a key={sb.key} href="#" onClick={go(sb.fn)}>{sb.label}</a>
+                        <a key={sb.key} href={sb.href || '#'} onClick={go(sb.fn)}>{sb.label}</a>
                       ))}
                     </div>
                   )}

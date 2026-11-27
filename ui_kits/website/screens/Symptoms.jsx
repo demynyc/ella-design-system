@@ -29,7 +29,7 @@ export function Symptoms({ lang, setRoute, symptomId, openSymptom, openArticle }
                 </button>
               ))}
             </div>
-            <a href="#" className="ella-urgent-strip" onClick={(e) => { e.preventDefault(); setRoute('urgent'); window.scrollTo({ top: 0 }); }}>
+            <a href={(window.ellaHref ? window.ellaHref(lang, 'urgent') : '#')} className="ella-urgent-strip" onClick={(e) => { e.preventDefault(); setRoute('urgent'); window.scrollTo({ top: 0 }); }}>
               <IconHeart width="18" height="18" />
               <span>{isEs ? 'Algunos síntomas no pueden esperar. Ve cuándo ir al médico de inmediato.' : 'Some symptoms can’t wait. See when to get care right away.'}</span>
               <IconArrow width="15" height="15" />
@@ -53,7 +53,7 @@ export function Symptoms({ lang, setRoute, symptomId, openSymptom, openArticle }
       <section className="ella-section-tight">
         <div className="ella-container">
           <div className="ella-sym-detail">
-            <a href="#" className="ella-article-back" onClick={(e) => { e.preventDefault(); openSymptom(null); }}>
+            <a href={(window.ellaHref ? window.ellaHref(lang, 'symptoms') : '#')} className="ella-article-back" onClick={(e) => { e.preventDefault(); openSymptom(null); }}>
               <IconChevron width="16" height="16" style={{ transform: 'rotate(180deg)' }} />
               {isEs ? 'Todos los síntomas' : 'All symptoms'}
             </a>
@@ -75,7 +75,7 @@ export function Symptoms({ lang, setRoute, symptomId, openSymptom, openArticle }
             <div className="ella-sym-doctor">
               <h2>{isEs ? 'Ve al médico si…' : 'See a doctor if…'}</h2>
               <ul>{s.doctor.map((t, i) => <li key={i}>{t}</li>)}</ul>
-              <a href="#" onClick={(e) => { e.preventDefault(); setRoute('urgent'); window.scrollTo({ top: 0 }); }}>
+              <a href={(window.ellaHref ? window.ellaHref(lang, 'urgent') : '#')} onClick={(e) => { e.preventDefault(); setRoute('urgent'); window.scrollTo({ top: 0 }); }}>
                 {isEs ? 'Cuándo ir de inmediato →' : 'When to get care right away →'}
               </a>
             </div>

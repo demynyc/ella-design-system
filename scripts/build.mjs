@@ -14,7 +14,7 @@
 //
 // Edit the site in ui_kits/website/ as before, then run the build.
 
-import { readFile, writeFile, mkdir, rm, cp } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm, cp, readdir } from 'node:fs/promises';
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { transform } from 'esbuild';
@@ -85,6 +85,11 @@ async function main() {
 
   // ---- 3. Static files
   await cp(join(SRC, 'assets'), join(OUT, 'assets'), { recursive: true });
+  // Only ship photos the site actually uses.
+  const used = js.code + css.code;
+  for (const f of await readdir(join(OUT, 'assets', 'photos'))) {
+    if (!used.includes(f)) await rm(join(OUT, 'assets', 'photos', f));
+  }
   await mkdir(join(OUT, 'vendor'), { recursive: true });
   await cp(join(ROOT, 'node_modules/react/umd/react.production.min.js'), join(OUT, 'vendor/react.production.min.js'));
   await cp(join(ROOT, 'node_modules/react-dom/umd/react-dom.production.min.js'), join(OUT, 'vendor/react-dom.production.min.js'));
@@ -163,6 +168,10 @@ function pageHtml({ lang, relBase, title, desc, canonicalPath, alternates, type 
   ${desc ? `<meta property="og:description" content="${esc(desc)}">` : ''}
   ${url ? `<meta property="og:url" content="${url}">` : ''}
   <meta property="og:image" content="${image}">
+  <meta property="og:image:width" content="2000">
+  <meta property="og:image:height" content="1335">
+  <meta property="og:image:alt" content="${lang === 'es' ? 'Manos abiertas sosteniendo una flor amarilla' : 'Open hands holding a small yellow flower'}">
+  ${url ? `<script type="application/ld+json">${JSON.stringify(structuredData({ lang, title, desc, url, image, type })).replace(/</g, '\\u003c')}</script>` : ''}
   <meta property="og:locale" content="${lang === 'es' ? 'es_US' : 'en_US'}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#fbf8f5">
@@ -196,6 +205,17 @@ function pageHtml({ lang, relBase, title, desc, canonicalPath, alternates, type 
 </body>
 </html>
 `;
+}
+
+// Tells search engines what each page is: the site itself, or an article.
+function structuredData({ lang, title, desc, url, image, type }) {
+  const publisher = { '@type': 'Organization', name: 'Ella Bienestar', url: SITE_ORIGIN + '/', logo: SITE_ORIGIN + '/assets/favicon.svg' };
+  if (type === 'article') {
+    return { '@context': 'https://schema.org', '@type': 'Article', headline: title.replace(/ · Ella Bienestar$/, ''),
+      description: desc, inLanguage: lang, url, mainEntityOfPage: url, image, publisher, author: publisher };
+  }
+  return { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description: desc, inLanguage: lang, url,
+    isPartOf: { '@type': 'WebSite', name: 'Ella Bienestar', url: SITE_ORIGIN + '/' }, publisher };
 }
 
 function rootHtml() {
@@ -281,7 +301,8 @@ async function renderPage(path, vendor, appJs) {
     symptoms: { en: getSymptoms('en').map((s) => ({ id: s.id, name: s.name, why: s.why })),
                 es: getSymptoms('es').map((s) => ({ id: s.id, name: s.name, why: s.why })) },
   })`);
-  const out = { html: root.innerHTML, pathname: w.location.pathname, errors, data: JSON.parse(JSON.stringify(data)) };
+  // Internal links relative to <base>, so they work under any folder or domain.
+  const out = { html: root.innerHTML.replace(/href="\/(?!\/)/g, 'href="'), pathname: w.location.pathname, errors, data: JSON.parse(JSON.stringify(data)) };
   w.close();
   return out;
 }

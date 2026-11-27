@@ -61,7 +61,7 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
         <div className="ella-container">
           <div className="ella-article-layout">
           <div className="ella-article">
-            <a className="ella-article-back" href="#"
+            <a className="ella-article-back" href={(window.ellaHref ? window.ellaHref(lang, 'articles') : '#')}
               onClick={(e) => { e.preventDefault(); setRoute('articles'); }}>
               <IconChevron width="16" height="16" style={{ transform: 'rotate(180deg)' }} />
               {t('article_back')}
@@ -202,7 +202,7 @@ export function ArticleView({ lang, setRoute, articleId, setArticleId }) {
               <div className="ella-eyebrow" style={{ marginBottom: 16 }}>{isEs ? 'SIGUE LEYENDO' : 'KEEP READING'}</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
                 {getArticles(lang).filter(a => a.id !== article.id).slice(0, 3).map((a) => (
-                  <a key={a.id} href="#" className="ella-article-mini"
+                  <a key={a.id} href={(window.ellaHref ? window.ellaHref(lang, 'article', a.id) : '#')} className="ella-article-mini"
                     onClick={(e) => { e.preventDefault(); setArticleId(a.id); window.scrollTo({ top: 0 }); }}>
                     <div className="ella-article-mini-cat">{a.category}</div>
                     <div className="ella-article-mini-title">{a.title}</div>

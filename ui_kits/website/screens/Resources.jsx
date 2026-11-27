@@ -32,7 +32,7 @@ export function Resources({ lang, setRoute }) {
       title: 'Corazón y ejercicio',
       note: 'Los 150 minutos a la semana, explicados.',
       links: [
-        { label: 'American Heart Association', desc: 'Riesgo cardiovascular en la menopausia', href: 'https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease' },
+        { label: 'American Heart Association', desc: 'Riesgo cardiovascular en la menopausia', href: 'https://www.goredforwomen.org/en/know-your-risk/menopause/menopause-and-cardiovascular-risk' },
         { label: 'Guía de actividad física de EE. UU.', desc: 'La recomendación oficial de ejercicio', href: 'https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines' },
         { label: 'Dieta mediterránea', desc: 'La forma de comer con más respaldo científico', href: 'https://www.nhlbi.nih.gov/education/dash-eating-plan' },
       ],
@@ -93,7 +93,7 @@ export function Resources({ lang, setRoute }) {
       title: 'Heart and exercise',
       note: 'The 150 minutes a week, explained.',
       links: [
-        { label: 'American Heart Association', desc: 'Cardiovascular risk through menopause', href: 'https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/menopause-and-heart-disease' },
+        { label: 'American Heart Association', desc: 'Cardiovascular risk through menopause', href: 'https://www.goredforwomen.org/en/know-your-risk/menopause/menopause-and-cardiovascular-risk' },
         { label: 'U.S. Physical Activity Guidelines', desc: 'Where the official exercise recommendation comes from', href: 'https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines' },
         { label: 'Heart-healthy eating', desc: 'The best-supported dietary pattern', href: 'https://www.nhlbi.nih.gov/education/dash-eating-plan' },
       ],
@@ -140,7 +140,7 @@ export function Resources({ lang, setRoute }) {
               {isEs ? 'Dónde leer más.' : 'Where to read further.'}
             </h1>
           </div>
-          <a href="#" className="ella-gloss-callout" onClick={(e) => { e.preventDefault(); setRoute('glossary'); window.scrollTo({ top: 0 }); }}>
+          <a href={(window.ellaHref ? window.ellaHref(lang, 'glossary') : '#')} className="ella-gloss-callout" onClick={(e) => { e.preventDefault(); setRoute('glossary'); window.scrollTo({ top: 0 }); }}>
             <span>
               <strong>{isEs ? 'Glosario español–inglés' : 'Spanish–English glossary'}</strong>
               {isEs ? 'Los términos que vas a escuchar en la cita, en los dos idiomas.' : 'The terms you’ll hear at the doctor, in both languages.'}

@@ -65,7 +65,7 @@ export function WhenToSeeDoctor({ lang, setRoute }) {
 
           <p className="ella-urgent-foot">
             {isEs ? '¿No tienes seguro o médico? ' : 'No insurance or doctor? '}
-            <a href="#" onClick={(e) => { e.preventDefault(); setRoute('budget'); window.scrollTo({ top: 0 }); }}>
+            <a href={(window.ellaHref ? window.ellaHref(lang, 'budget') : '#')} onClick={(e) => { e.preventDefault(); setRoute('budget'); window.scrollTo({ top: 0 }); }}>
               {isEs ? 'Así puedes conseguir atención de bajo costo →' : 'Here’s how to find low-cost care →'}
             </a>
           </p>

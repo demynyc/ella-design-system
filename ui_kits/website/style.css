@@ -2727,3 +2727,10 @@ body{background:var(--ella-oat-100)}
 :root{--ella-ink:#6a4f5f;--ella-ink-fg:#f6ece9;--ella-ink-muted:rgba(246,236,233,.72)}
 .ella-ft-sep::before{background:linear-gradient(90deg,rgba(217,179,196,.18) 0%,#d9b3c4 18%,#ecd2dd 50%,#d9b3c4 82%,rgba(217,179,196,.18) 100%);box-shadow:0 0 14px rgba(217,179,196,.35)}
 .ella-ft-sep-badge,.ella-ft-sep .ella-ft-sep-badge{border-color:#d9b3c4;box-shadow:0 0 0 6px var(--ella-ink),0 0 18px rgba(217,179,196,.35)}
+
+/* Skip link: hidden until a keyboard user tabs to it */
+.ella-skip{position:fixed;left:16px;top:-60px;z-index:200;padding:10px 18px;border-radius:999px;background:var(--ella-rose);color:#fdf8f6;font-weight:600;text-decoration:none;transition:top .15s ease}
+.ella-skip:focus{top:12px;outline:2px solid #2f261d;outline-offset:2px}
+#main:focus{outline:none}
+/* Clear keyboard focus ring on links and buttons */
+#root a:focus-visible,#root button:focus-visible,#root summary:focus-visible{outline:2px solid var(--ella-rose);outline-offset:3px;border-radius:6px}

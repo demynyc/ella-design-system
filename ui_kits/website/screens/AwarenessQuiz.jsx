@@ -339,7 +339,7 @@ export function AwarenessQuiz({ lang, setRoute, openArticle }) {
 
               <div className="ella-pillars" style={{ marginTop: 32 }}>
                 {recs.map((r, i) => (
-                  <a key={i} className="ella-pillar-card" data-tone={r.tone} href="#" onClick={(e) => { e.preventDefault(); if (r.articleId && openArticle) openArticle(r.articleId); else { setRoute(r.route); window.scrollTo({ top: 0 }); } }}>
+                  <a key={i} className="ella-pillar-card" data-tone={r.tone} href={(window.ellaHref ? (r.articleId ? window.ellaHref(lang, 'article', r.articleId) : window.ellaHref(lang, r.route)) : '#')} onClick={(e) => { e.preventDefault(); if (r.articleId && openArticle) openArticle(r.articleId); else { setRoute(r.route); window.scrollTo({ top: 0 }); } }}>
                     <div className="ella-pillar-icon">{r.icon}</div>
                     <h3>{r.title}</h3>
                     <p>{r.desc}</p>
